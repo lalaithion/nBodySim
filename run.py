@@ -54,7 +54,8 @@ while running:
 			elif event.key == pygame.K_RETURN:
 				name = time.strftime("%H:%M:%S")
 				f = open(name,'w')
-				pickle.dump(ls,f)
+				total = [ls,paths]
+				pickle.dump(total,f)
 		if creating:
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				pause = False
