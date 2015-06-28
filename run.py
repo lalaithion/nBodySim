@@ -26,7 +26,7 @@ class PathItem:
 paths = []
 
 running = True
-
+xstart, ystart = 0,0
 xoff, yoff = 0, 0
 mass = 0
 pause = False
@@ -48,7 +48,7 @@ while running:
 			elif event.key == pygame.K_SPACE:
 				pause = not pause
 			elif event.key == pygame.K_RETURN:
-				name = string(time.strftime("%H:%M:%S"))
+				name = str(time.strftime("%H:%M:%S"))
 				f = open(name,'w')
 				pickle.dump(ls,name)
 		if creating:
@@ -59,6 +59,7 @@ while running:
 				a = particleClass.Particle(xstart-xoff, ystart-yoff, xstart-xend, ystart-yend)
 				print "3 ",
 				print mass
+				a.mass = mass
 				a.active = True
 				ls.append(a)
 				mass = 0
@@ -76,18 +77,24 @@ while running:
 			distance = math.sqrt(math.pow(sizex-xstart,2) + math.pow(sizey-ystart,2))
 			print "1 ",
 			print mass
-			mass = math.pow(distance,2)
+			mass = math.pow(distance,4)
 			print "2 ",
 			print mass
-	if not pause:
-		screen.fill((0,0,0))
-		for b in paths:
-			pygame.draw.circle(screen, b.color, (int(b.position[0])+xoff,int(b.position[1])+yoff), 0, 0)
-		for a in ls:
-			pygame.draw.circle(screen, a.color, (int(a.position[0])+xoff,int(a.position[1])+yoff), int(math.sqrt(math.sqrt(a.mass))), 0)
+
+	screen.fill((0,0,0))
+	for b in paths:
+		pygame.draw.circle(screen, b.color, (int(b.position[0])+xoff,int(b.position[1])+yoff), 0, 0)
+	for a in ls:
+		pygame.draw.circle(screen, a.color, (int(a.position[0])+xoff,int(a.position[1])+yoff), int(math.sqrt(math.sqrt(a.mass))), 0)
+		if not pause:
 			b = PathItem((int(a.position[0]),int(a.position[1])), a.color)
 			paths.append(b)
-		ls = [x for x in ls if not x.delete]
+	if creating:
+		xpos, ypos = pygame.mouse.get_pos()
+		radius = int(math.sqrt(math.pow(xstart-xpos,2)+math.pow(ystart-ypos,2)))
+		pygame.draw.circle(screen, (255,255,255), (xstart+xoff,ystart+yoff), radius, int(radius/10))
+	ls = [x for x in ls if not x.delete]
+	if not pause:
 		pygame.display.flip()
 		particleClass.update(ls)
 		
