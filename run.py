@@ -5,20 +5,20 @@ import random
 import numpy
 import math
 import pickle
+from guppy import hpy
 
 width = 1080
 height = 720
 
 screen = pygame.display.set_mode((width, height))
 
-ls = []
-'''
+ls = [] 
+
 for i in range(40):
 	color = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255))
 	a = particleClass.Particle(random.randrange(100,980), random.randrange(100,620), random.randrange(3,25),random.randrange(3,25))
 	a.active = True
 	ls.append(a)
-'''
 
 class PathItem:
 	def __init__(self,pos,color):
@@ -35,6 +35,7 @@ xoff, yoff = 0, 0
 mass = 0
 pause = False
 creating = False
+h = hpy()
 
 while running:
 	for event in pygame.event.get():
@@ -55,6 +56,9 @@ while running:
 				name = time.strftime("%H:%M:%S")
 				f = open(name,'w')
 				pickle.dump(ls,f)
+			elif event.key == pygame.K_m:
+				print h.heap()
+
 		if creating:
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				pause = False
@@ -97,7 +101,7 @@ while running:
 	ls = [x for x in ls if not x.delete]
 	if not pause:
 		particleClass.update(ls)
-		
+
 pygame.quit()
 
 
