@@ -12,11 +12,13 @@ height = 720
 screen = pygame.display.set_mode((width, height))
 
 ls = []
+'''
 for i in range(40):
 	color = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255))
 	a = particleClass.Particle(random.randrange(100,980), random.randrange(100,620), random.randrange(3,25),random.randrange(3,25))
 	a.active = True
 	ls.append(a)
+'''
 
 class PathItem:
 	def __init__(self,pos,color):
@@ -26,7 +28,9 @@ class PathItem:
 paths = []
 
 running = True
-xstart, ystart = 0,0
+size = True
+xstart, ystart = 0, 0
+sizex, sizey = 0, 0
 xoff, yoff = 0, 0
 mass = 0
 pause = False
@@ -48,7 +52,7 @@ while running:
 			elif event.key == pygame.K_SPACE:
 				pause = not pause
 			elif event.key == pygame.K_RETURN:
-				name = str(time.strftime("%H:%M:%S"))
+				name = time.strftime("%H:%M:%S")
 				f = open(name,'w')
 				pickle.dump(ls,name)
 		if creating:
@@ -56,30 +60,22 @@ while running:
 				pause = False
 				creating = False
 				xend, yend = event.pos
-				a = particleClass.Particle(xstart-xoff, ystart-yoff, xstart-xend, ystart-yend)
-				print "3 ",
-				print mass
+				a = particleClass.Particle(xstart-xoff, ystart-yoff, 2*(xstart-xend), 2*(ystart-yend))
 				a.mass = mass
 				a.active = True
 				ls.append(a)
 				mass = 0
-				print "4 ",
-				print mass
-				print "done"
 		elif event.type == pygame.MOUSEBUTTONDOWN:
-			print "new"
+			size = False
 			xstart, ystart = event.pos
 			pause = True
 			creating = True
 			mass = 1
 		if event.type == pygame.MOUSEBUTTONUP:
+			size = True
 			sizex, sizey, = event.pos
 			distance = math.sqrt(math.pow(sizex-xstart,2) + math.pow(sizey-ystart,2))
-			print "1 ",
-			print mass
 			mass = math.pow(distance,4)
-			print "2 ",
-			print mass
 
 	screen.fill((0,0,0))
 	for b in paths:
@@ -91,11 +87,15 @@ while running:
 			paths.append(b)
 	if creating:
 		xpos, ypos = pygame.mouse.get_pos()
-		radius = int(math.sqrt(math.pow(xstart-xpos,2)+math.pow(ystart-ypos,2)))
-		pygame.draw.circle(screen, (255,255,255), (xstart+xoff,ystart+yoff), radius, int(radius/10))
+		if not size:
+			radius = int(math.sqrt(math.pow(xstart-xpos,2)+math.pow(ystart-ypos,2)))
+			pygame.draw.circle(screen, (254,254,200), (xstart+xoff,ystart+yoff), radius, 0)
+		else:
+			radius = int(math.sqrt(math.pow(xstart-sizex,2)+math.pow(ystart-sizey,2)))
+			pygame.draw.circle(screen, (254,254,200), (xstart+xoff,ystart+yoff), radius, 0)
+	pygame.display.flip()
 	ls = [x for x in ls if not x.delete]
 	if not pause:
-		pygame.display.flip()
 		particleClass.update(ls)
 		
 pygame.quit()
