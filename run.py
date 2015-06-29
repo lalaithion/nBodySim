@@ -2,9 +2,9 @@ import pygame
 import time
 import particleClass
 import random
-import numpy
 import math
 import pickle
+import sys
 from guppy import hpy
 
 width = 1080
@@ -12,20 +12,22 @@ height = 720
 
 screen = pygame.display.set_mode((width, height))
 
-ls = [] 
+ls    = [] #list of particles (class)
+paths = [] #list of pathitems (class) 
 
-for i in range(40):
-	color = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255))
-	a = particleClass.Particle(random.randrange(100,980), random.randrange(100,620), random.randrange(3,25),random.randrange(3,25))
-	a.active = True
-	ls.append(a)
+def buildRandomSystem(maxParticles):
+	if(maxParticles<50):
+		for i in range(maxParticles):
+			color = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255))
+			a = particleClass.Particle(random.randrange(100,980), random.randrange(100,620), random.randrange(3,25),random.randrange(3,25))
+			a.active = True
+			ls.append(a)
 
 class PathItem:
 	def __init__(self,pos,color):
 		self.position = numpy.array([pos[0],pos[1]],int)
 		self.color = color
 
-paths = []
 
 running = True
 size = True
@@ -36,7 +38,7 @@ mass = 0
 pause = False
 creating = False
 h = hpy()
-
+buildRandomSystem(10)
 while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
@@ -58,7 +60,9 @@ while running:
 				pickle.dump(ls,f)
 			elif event.key == pygame.K_m:
 				print h.heap()
-
+			elif event.key == pygame.K_c: #clear screen
+				del ls[:]
+				del paths[:]
 		if creating:
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				pause = False
@@ -103,5 +107,4 @@ while running:
 		particleClass.update(ls)
 
 pygame.quit()
-
 
