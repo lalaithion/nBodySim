@@ -47,6 +47,7 @@ xoff, yoff = 0, 0
 mass = 0
 pause = False
 creating = False
+creatingactive = True
 h = hpy()
 buildRandomSystem(25)
 
@@ -66,16 +67,19 @@ while running:
 			elif event.key == pygame.K_s:
 				yoff -= 100
 			elif event.key == pygame.K_SPACE:
-				pause = not pause
+				if not creating:
+					pause = not pause
 			elif event.key == pygame.K_RETURN:
 				name = time.strftime("%H:%M:%S")
 				f = open(name,'w')
 				total = [ls,paths]
 				pickle.dump(total,f)
-			elif event.key == pygame.K_m:
+			elif event.key == pygame.K_z:
 				print h.heap()
 			elif event.key == pygame.K_c: #clear screen
 				del ls[:]
+				del paths[:]
+			elif event.key == pygame.K_x: #clear paths
 				del paths[:]
 
 		if creating:
@@ -85,9 +89,21 @@ while running:
 				xend, yend = event.pos
 				a = particleClass.Particle(xstart-xoff, ystart-yoff, 2*(xstart-xend), 2*(ystart-yend))
 				a.mass = mass
-				a.active = True
+				a.active = creatingactive
 				ls.append(a)
 				mass = 0
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_q:
+					creatingactive = not creatingactive
+				if event.key == pygame.K_SPACE:
+					pause = False
+					creating = False
+					a = particleClass.Particle(xstart-xoff, ystart-yoff, 0, 0)
+					a.mass = mass
+					a.active = creatingactive
+					ls.append(a)
+					mass = 0
+
 		elif event.type == pygame.MOUSEBUTTONDOWN:
 			size = False
 			xstart, ystart = event.pos
@@ -110,12 +126,16 @@ while running:
 			paths.append(b)
 	if creating:
 		xpos, ypos = pygame.mouse.get_pos()
+		if creatingactive:
+			color = (30,240,30)
+		else:
+			color = (240,30,30)
 		if not size:
 			radius = int(math.sqrt(math.pow(xstart-xpos,2)+math.pow(ystart-ypos,2)))
-			pygame.draw.circle(screen, (254,254,200), (xstart+xoff,ystart+yoff), radius, 0)
+			pygame.draw.circle(screen, color, (xstart+xoff,ystart+yoff), radius, 0)
 		else:
 			radius = int(math.sqrt(math.pow(xstart-sizex,2)+math.pow(ystart-sizey,2)))
-			pygame.draw.circle(screen, (254,254,200), (xstart+xoff,ystart+yoff), radius, 0)
+			pygame.draw.circle(screen, color, (xstart+xoff,ystart+yoff), radius, 0)
 	pygame.display.flip()
 	ls = [x for x in ls if not x.delete]
 	if not pause:

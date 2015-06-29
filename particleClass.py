@@ -25,6 +25,10 @@ class Particle:
 			if self.mass > other.mass: 																	#and this is the bigger mass
 				self.mass += other.mass 																#add the mass of the smaller one to this mass
 				other.delete = True 																	#and delete the other
+			if self.mass < other.mass:																	#if the other one is bigger
+				if not other.active:																	#and it's not active
+					other.mass += self.mass 															#add the mass of us to this mass
+					self.delete = True																	#and delete ourselves
 		accel = (other.mass * grav)/(math.pow(radius,2)) * ((other.position-self.position)/radius) 	#using the radius above and newton's law of gravitational acceleration, calculate the acceleration vector
 		self.velocity = self.velocity + (accel * TIMESTEP) 											#multiply the acceleration by the time to find delta-v, and add delta-v to the initial velocity.
 	def move(self): 																			#This finds the change in position
