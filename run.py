@@ -51,7 +51,7 @@ buildRandomSystem(50)
 #This code loads a specific example
 '''
 loadls = []
-f = open("input.txt")
+f = open("planets_example.txt")
 
 loadls = pickle.load(f)
 

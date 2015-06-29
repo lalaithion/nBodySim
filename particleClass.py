@@ -24,8 +24,12 @@ class Particle:
 		radius = numpy.linalg.norm(other.position - self.position) 									#this uses numpy's algorithm to get the position vector from other to self
 		if radius < math.sqrt(math.sqrt((self.mass+other.mass))): 									#if one of the particles is within the displayed radius (which is the fourth root of the mass) of the other
 			if self.mass > other.mass: 																	#and this is the bigger mass
+				#calculate the avergae velocity of the two
+				self.velocity[0] = ((other.velocity[0] * other.mass) + (self.velocity[0] * self.mass))/(self.mass+other.mass)
+				self.velocity[1] = ((other.velocity[1] * other.mass) + (self.velocity[1] * self.mass))/(self.mass+other.mass)
 				self.mass += other.mass 																#add the mass of the smaller one to this mass
 				other.delete = True 																	#and delete the other
+				return 
 			if self.mass < other.mass:																	#if the other one is bigger
 				if not other.active:																	#and it's not active
 					other.mass += self.mass 															#add the mass of us to this mass
