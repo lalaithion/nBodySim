@@ -2,7 +2,8 @@ import numpy
 import math
 import random
 
-TIMESTEP = .03
+TIMESTEP = [1, .5, .3, .2, .1, .05, .03, .01, .005]
+x = 5
 
 class Particle:
 	"""
@@ -30,9 +31,9 @@ class Particle:
 					other.mass += self.mass 															#add the mass of us to this mass
 					self.delete = True																	#and delete ourselves
 		accel = (other.mass * grav)/(math.pow(radius,2)) * ((other.position-self.position)/radius) 	#using the radius above and newton's law of gravitational acceleration, calculate the acceleration vector
-		self.velocity = self.velocity + (accel * TIMESTEP) 											#multiply the acceleration by the time to find delta-v, and add delta-v to the initial velocity.
+		self.velocity = self.velocity + (accel * TIMESTEP[x]) 											#multiply the acceleration by the time to find delta-v, and add delta-v to the initial velocity.
 	def move(self): 																			#This finds the change in position
-		self.position = self.position + (self.velocity * TIMESTEP) 									#multiply the velocity by the time to find change in position, and add this change to the inital position
+		self.position = self.position + (self.velocity * TIMESTEP[x])								#multiply the velocity by the time to find change in position, and add this change to the inital position
 
 def update(ls): 				#this updates all the particles in ls
 	for a in ls: 					#for every paricle in ls

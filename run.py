@@ -36,9 +36,6 @@ class PathItem:
 		self.position = numpy.array([pos[0],pos[1]],int)
 		self.color = color
 
-
-
-
 running = True
 size = True
 xstart, ystart = 0, 0
@@ -51,7 +48,16 @@ creatingactive = True
 h = hpy()
 buildRandomSystem(50)
 
+#This code loads a specific example
+'''
+loadls = []
+f = open("input.txt")
 
+loadls = pickle.load(f)
+
+ls = loadls[0]
+paths = loadls[1]
+'''
 
 while running:
 	for event in pygame.event.get():
@@ -75,12 +81,22 @@ while running:
 				total = [ls,paths]
 				pickle.dump(total,f)
 			elif event.key == pygame.K_z:
+				print len(paths)
 				print h.heap()
 			elif event.key == pygame.K_c: #clear screen
 				del ls[:]
 				del paths[:]
 			elif event.key == pygame.K_x: #clear paths
+				print len(paths)
 				del paths[:]
+			elif event.key == pygame.K_MINUS:
+				particleClass.x += 1
+				if particleClass.x > 8:
+					particleClass.x =8
+			elif event.key == pygame.K_EQUALS:
+				particleClass.x -= 1
+				if particleClass.x < 0:
+					particleClass.x = 0
 
 		if creating:
 			if event.type == pygame.MOUSEBUTTONDOWN:
