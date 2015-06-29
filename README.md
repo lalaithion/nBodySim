@@ -16,9 +16,14 @@ Press q while creating to prevent the particle from changing speed beyond the in
 
 Things To Add:
 
-*Ability to center on any object
-*Ability to show paths based on frame of reference of any object
-*Ability to create inactive particles that move on periodic paths, not just stay still or move in a simgle direction at a single speed
-*Adding a simulation saving and loading option
-*Adding a finish line?
-*Other goals
+  Ability to center on any object
+  
+  Ability to show paths based on frame of reference of any object
+  
+  Ability to create inactive particles that move on periodic paths, not just stay still or move in a simgle direction at a single speed
+  
+  Adding a simulation saving and loading option
+  
+  Adding a finish line?
+  
+  Other goals
