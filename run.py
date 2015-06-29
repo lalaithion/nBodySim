@@ -20,14 +20,14 @@ def buildRandomSystem(maxParticles):
 	if(maxParticles<50):
 		for i in range(maxParticles):
 			color = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255))
-			a = particleClass.Particle(random.randrange(100,980), random.randrange(100,620), random.randrange(1,50),random.randrange(1,50))
+			a = particleClass.Particle(random.randrange(100,980), random.randrange(100,620), random.randrange(-50,50),random.randrange(-50,50))
 			a.active = True
 			ls.append(a)
 	else:
 		maxParticles = 50
 		for i in range(maxParticles):
 			color = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255))
-			a = particleClass.Particle(random.randrange(100,980), random.randrange(100,620), random.randrange(1,50),random.randrange(1,50))
+			a = particleClass.Particle(random.randrange(100,980), random.randrange(100,620), random.randrange(-50,50),random.randrange(-50,50))
 			a.active = True
 			ls.append(a)
 
@@ -49,7 +49,7 @@ pause = False
 creating = False
 creatingactive = True
 h = hpy()
-buildRandomSystem(25)
+buildRandomSystem(50)
 
 
 
@@ -132,10 +132,10 @@ while running:
 			color = (240,30,30)
 		if not size:
 			radius = int(math.sqrt(math.pow(xstart-xpos,2)+math.pow(ystart-ypos,2)))
-			pygame.draw.circle(screen, color, (xstart+xoff,ystart+yoff), radius, 0)
+			pygame.draw.circle(screen, color, (xstart,ystart), radius, 0)
 		else:
 			radius = int(math.sqrt(math.pow(xstart-sizex,2)+math.pow(ystart-sizey,2)))
-			pygame.draw.circle(screen, color, (xstart+xoff,ystart+yoff), radius, 0)
+			pygame.draw.circle(screen, color, (xstart,ystart), radius, 0)
 	pygame.display.flip()
 	ls = [x for x in ls if not x.delete]
 	if not pause:
