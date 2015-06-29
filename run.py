@@ -2,6 +2,7 @@ import pygame
 import time
 import particleClass
 import random
+import numpy
 import math
 import pickle
 import sys
@@ -57,12 +58,14 @@ while running:
 			elif event.key == pygame.K_RETURN:
 				name = time.strftime("%H:%M:%S")
 				f = open(name,'w')
-				pickle.dump(ls,f)
+				total = [ls,paths]
+				pickle.dump(total,f)
 			elif event.key == pygame.K_m:
 				print h.heap()
 			elif event.key == pygame.K_c: #clear screen
 				del ls[:]
 				del paths[:]
+
 		if creating:
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				pause = False
