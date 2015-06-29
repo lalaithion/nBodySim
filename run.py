@@ -20,7 +20,14 @@ def buildRandomSystem(maxParticles):
 	if(maxParticles<50):
 		for i in range(maxParticles):
 			color = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255))
-			a = particleClass.Particle(random.randrange(100,980), random.randrange(100,620), random.randrange(3,25),random.randrange(3,25))
+			a = particleClass.Particle(random.randrange(100,980), random.randrange(100,620), random.randrange(1,50),random.randrange(1,50))
+			a.active = True
+			ls.append(a)
+	else:
+		maxParticles = 50
+		for i in range(maxParticles):
+			color = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255))
+			a = particleClass.Particle(random.randrange(100,980), random.randrange(100,620), random.randrange(1,50),random.randrange(1,50))
 			a.active = True
 			ls.append(a)
 
@@ -28,6 +35,8 @@ class PathItem:
 	def __init__(self,pos,color):
 		self.position = numpy.array([pos[0],pos[1]],int)
 		self.color = color
+
+
 
 
 running = True
@@ -39,7 +48,10 @@ mass = 0
 pause = False
 creating = False
 h = hpy()
-buildRandomSystem(10)
+buildRandomSystem(25)
+
+
+
 while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
