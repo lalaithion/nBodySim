@@ -3,7 +3,7 @@ import math
 import random
 
 TIMESTEP = [1, .5, .3, .2, .1, .05, .03, .01, .005]
-x = 5
+x = 6
 
 class Particle:
 	"""
@@ -38,6 +38,17 @@ class Particle:
 		self.velocity = self.velocity + (accel * TIMESTEP[x]) 											#multiply the acceleration by the time to find delta-v, and add delta-v to the initial velocity.
 	def move(self): 																			#This finds the change in position
 		self.position = self.position + (self.velocity * TIMESTEP[x])								#multiply the velocity by the time to find change in position, and add this change to the inital position
+	def conicmove(self,ls):
+		otherranking = 0
+		for b in ls:
+			if b is not self:
+				radius = numpy.linalg.norm(b.position - self.position) 
+				branking = b.mass/math.pow(radius,2)
+				if branking > otherranking:
+					other = b
+		#Universal Variable Formulation????
+
+
 
 def update(ls): 				#this updates all the particles in ls
 	for a in ls: 					#for every paricle in ls
