@@ -1,8 +1,7 @@
 import pygame
 import time
 import particleClass
-import pickle
-import sys
+import sys 
 from guppy import hpy
 
 width = 1080
