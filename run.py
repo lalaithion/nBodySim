@@ -46,7 +46,7 @@ pause = False
 creating = False
 creatingactive = True
 h = hpy()
-buildRandomSystem(50)
+buildRandomSystem(30)
 
 '''
 f = open("test.txt",'w')
@@ -109,7 +109,14 @@ while running:
 				pause = False
 				creating = False
 				xend, yend = event.pos
-				a = particleClass.Particle(xstart-xoff, ystart-yoff, 2*(xstart-xend), 2*(ystart-yend))
+				h1 = math.sqrt(math.pow(xstart-xend,2)+math.pow(ystart-yend,2))
+				h2 = h1 - math.sqrt(math.sqrt(mass))
+				constant = h2/h1
+				x2 = constant * (xstart-xend)
+				y2 = constant * (ystart-yend)
+				if h2 < 0:
+					x2, y2 = 0,0
+				a = particleClass.Particle(xstart-xoff, ystart-yoff, x2,y2)
 				a.mass = mass
 				a.active = creatingactive
 				ls.append(a)
@@ -158,7 +165,6 @@ while running:
 		else:
 			radius = int(math.sqrt(math.pow(xstart-sizex,2)+math.pow(ystart-sizey,2)))
 			pygame.draw.circle(screen, color, (xstart,ystart), radius, 0)
-
 		"""
 		newls = []
 		a = particleClass.Particle(xstart-xoff, ystart-yoff, 2*(xstart-xpos), 2*(ystart-ypos))

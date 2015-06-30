@@ -16,6 +16,7 @@ class Particle:
 		self.position = numpy.array([x,y], float) 													#this holds the position in 2D space; 0,0 is the initial top left corner of the display
 		self.velocity = numpy.array([s,r], float) 													#this holds the velocity as a vector
 		self.mass = random.lognormvariate(1,6) 														#during initialization, a random mass is chosen; it can be overwritten later
+		self.radius = math.sqrt(math.sqrt(self.mass))
 		self.active = True 																			#all particles are active be default; and inactive particle will exert gravitational acceleration but not experience it
 		self.color = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255)) 		#a random color will be chosen; it can be overwritten later
 		self.delete = False 																		#if this is True, then it will be deleted from the list at the next opporitunity
