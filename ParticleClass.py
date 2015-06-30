@@ -35,8 +35,8 @@ class Particle:
 		accel = [0,0]
 		accel[0] = (other.mass * grav)/(math.pow(radius,2)) * ((other.position[0]-self.position[0])/radius) 		#using the radius above and newton's law of gravitational acceleration, calculate the acceleration vector
 		accel[1] = (other.mass * grav)/(math.pow(radius,2)) * ((other.position[1]-self.position[1])/radius)
-		self.velocity[0] = self.velocity[0] + (accel[0] * timestep) 	
-		self.velocity[1] = self.velocity[1] + (accel[1] * timestep) 	
+		self.velocity[0] = (self.velocity[0] + (accel[0] * timestep) )	
+		self.velocity[1] = (self.velocity[1] + (accel[1] * timestep) )	
 
 	def _handleCollision(self, other):
 		distance = math.sqrt((self.position[0] - other.position[0])**2 + (self.position[1] - other.position[1])**2)
@@ -54,8 +54,8 @@ class Particle:
 				self.delete = True
 
 	def updatePosition(self):
-		self.position[0] = self.position[0] + (self.velocity[0] * timestep) 	
-		self.position[1] = self.position[1] + (self.velocity[1] * timestep) 									#multiply the velocity by the time to find change in position, and add this change to the inital position
+		self.position[0] = self.position[0] + (self.velocity[0] * timestep)*zoomOffset 	#zoomOffset scales velocity to zoom level
+		self.position[1] = self.position[1] + (self.velocity[1] * timestep)*zoomOffset 									#multiply the velocity by the time to find change in position, and add this change to the inital position
 
 	def updateVelocity(self, ls):
 		for particle in ls:

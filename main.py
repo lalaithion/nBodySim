@@ -57,6 +57,7 @@ while running:
 					ParticleClass.timestep = ParticleClass.timestep*2
 			elif event.key == pygame.K_0:
 				ParticleClass.timestep = .01
+				
 			elif event.key == pygame.K_LEFTBRACKET:
 				for particle in mainSystem.particleList:
 					particle.radius = particle.radius/2
