@@ -3,7 +3,7 @@ import math
 import random
 import pygame
 
-timestep = .03 #THIS NEEDS TO BE FIXED
+timestep = .01 #THIS NEEDS TO BE FIXED
 
 class Particle:
 
@@ -37,15 +37,17 @@ class Particle:
 
 	def _handleCollision(self, other):
 		distance = math.sqrt(math.pow((other.position[0] - self.position[0]),2) + math.pow((other.position[1] - self.position[1]),2))								#this uses numpy's algorithm to get the position vector from other to self
-		if distance < self.radius:
+		if distance <= self.radius:
 			self.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
 			self.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
 			self.mass += other.mass
-		elif other.static:
-			if distance < other.radius:
+			other.delete = True
+		elif not other.static:
+			if distance <= other.radius:
 				other.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
 				other.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
 				other.mass += self.mass
+				self.delete = True
 
 	def updatePosition(self):
 		self.position[0] = self.position[0] + (self.velocity[0] * timestep) 	
@@ -61,3 +63,4 @@ class Particle:
 			pygame.draw.circle(screen, self.color, ((int(point[0]+offset[0]),int(point[1])+offset[1])), 0, 0)
 		pygame.draw.circle(screen, self.color, (int(self.position[0]+offset[0]),int(self.position[1]+offset[1])), int(self.radius), 0)
 		self.path.append((self.position[0],self.position[1]))
+		self.path = self.path[-500:] #This deletes any points older than 500
