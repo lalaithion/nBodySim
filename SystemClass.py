@@ -26,7 +26,7 @@ class System:
 		self.particleList.append(particle)
 
 	def removeParticle(self, particle):
-		self.particleList.pop(particle)
+		self.particleList.remove(particle)
 
 	def deleteSystem(self):
 		del self.particleList[:]

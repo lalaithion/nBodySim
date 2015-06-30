@@ -88,6 +88,9 @@ while running:
 		for particle in mainSystem.particleList:
 			if not particle.static:
 				particle.updateVelocity(mainSystem.particleList)
+			if particle.delete:
+				mainSystem.removeParticle(particle)
+				
 		for particle in mainSystem.particleList:
 			if not particle.static:
 				particle.updatePosition()
