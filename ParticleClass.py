@@ -37,9 +37,18 @@ class Particle:
 		self.velocity[1] = self.velocity[1] + (accel[1] * timestep) 	
 
 	def _handleCollision(self, other):
-		radius = math.sqrt(math.pow((other.position[0] - self.position[0]),2) + math.pow((other.position[1] - self.position[1]),2))								#this uses numpy's algorithm to get the position vector from other to self
-		if radius < math.sqrt(math.sqrt((self.mass+other.mass))): 										#if one of the particles is within the displayed radius (which is the fourth root of the mass) of the other
-			pass
+		distance = math.sqrt(math.pow((other.position[0] - self.position[0]),2) + math.pow((other.position[1] - self.position[1]),2))								#this uses numpy's algorithm to get the position vector from other to self
+		if distance < self.radius:
+			self.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
+			self.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
+			self.mass += other.mass
+		elif other.static:
+			if distance < other.radius:
+				other.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
+				other.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
+				other.mass += self.mass
+
+
 
 	def updatePosition(self):
 		self.position[0] = self.position[0] + (self.velocity[0] * timestep) 	
@@ -53,5 +62,5 @@ class Particle:
 	def draw(self, screen, offset):
 		for point in self.path:
 			pygame.draw.circle(screen, self.color, ((int(point[0]+offset[0]),int(point[1])+offset[1])), 0, 0)
-			pygame.draw.circle(screen, self.color, (int(self.position[0]+offset[0]),int(self.position[1]+offset[1])), self.radius, 0)
-			path.append((self.position[0],self.position[1]))
+		pygame.draw.circle(screen, self.color, (int(self.position[0]+offset[0]),int(self.position[1]+offset[1])), int(self.radius), 0)
+		self.path.append((self.position[0],self.position[1]))

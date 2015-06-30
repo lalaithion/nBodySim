@@ -26,15 +26,16 @@ class Temp(ParticleClass.Particle):
 		constant = borderToMouse/centerToMouse
 		self.velocity = (constant * (self.position[0]-mousePosition[0]), constant * (self.position[1]-mousePosition[1]))
 
-	def updateActive(self):
-		self.active = not self.active
-		if self.active:
-			color = (0,255,0,0)
+	def updateStatic(self):
+		self.static = not self.static
+		if self.static:
+			self.color = (20,230,20,0)
 		else:
-			color = (255,0,0,0)
+			self.color = (230,20,20,0)
 
 	def createRealParticle(self):
 		randomcolor = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255),1)
 		created = ParticleClass.Particle(self.position, self.velocity, self.radius, self.mass, randomcolor)
+		created.static = self.static
 		return created
 

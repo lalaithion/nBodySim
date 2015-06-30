@@ -58,7 +58,7 @@ while running:
 				mainSystem.addParticle(newParticle)
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_q:
-					creating.updateActive()
+					creating.updateStatic()
 				if event.key == pygame.K_SPACE:
 					pause = 0
 					newParticle = creating.createRealParticle()
@@ -67,6 +67,7 @@ while running:
 		elif event.type == pygame.MOUSEBUTTONDOWN:
 			size = False
 			creating = temp.Temp(event.pos)
+			creating.updateStatic()
 			pause = 2
 		if event.type == pygame.MOUSEBUTTONUP:
 			size = True
@@ -83,11 +84,13 @@ while running:
 
 	pygame.display.flip()
 
-	for particle in mainSystem.particleList:
-		particle.updateVelocity(mainSystem.particleList)
-
-	for particle in mainSystem.particleList:
-		particle.updatePosition()
+	if pause == 0:
+		for particle in mainSystem.particleList:
+			if particle.static:
+				particle.updateVelocity(mainSystem.particleList)
+		for particle in mainSystem.particleList:
+			if particle.static:
+				particle.updatePosition()
 
 pygame.quit()
 
