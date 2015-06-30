@@ -14,12 +14,12 @@ class Temp(ParticleClass.Particle):
 		radius = 0
 		ParticleClass.Particle.__init__(self, position, velocity, radius, mass, color)
 
-	def updateRadius(self, mousePosition):
-		self.radius = math.sqrt(math.pow((self.position[0] - mousePosition[0]),2) + math.pow((self.position[1] - mousePosition[1]),2))
+	def updateRadius(self, mousePosition, offset):
+		self.radius = math.sqrt(math.pow((self.position[0] - mousePosition[0] + offset[0]),2) + math.pow((self.position[1] - mousePosition[1] + offset[1]),2))
 		self.mass = math.pow(self.radius,4)
 
-	def updateVelocity(self, mousePosition):
-		centerToMouse = math.sqrt(math.pow((self.position[0] - mousePosition[0]),2) + math.pow((self.position[1] - mousePosition[1]),2))
+	def updateVelocity(self, mousePosition, offset):
+		centerToMouse = math.sqrt(math.pow((self.position[0] - mousePosition[0] + offset[0]),2) + math.pow((self.position[1] - mousePosition[1] + offset[1]),2))
 		borderToMouse = centerToMouse - self.radius
 		if borderToMouse <= 0:
 			self.velocity = (0,0)
