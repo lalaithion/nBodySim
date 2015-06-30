@@ -14,7 +14,9 @@ height = 720
 screen = pygame.display.set_mode((width, height))
 
 ls    = [] #list of particles (class)
-paths = [] #list of pathitems (class) 
+paths = [] #list of pathitems (class)
+newls = []
+newpaths = []
 
 def buildRandomSystem(maxParticles):
 	if(maxParticles<50):
@@ -165,27 +167,8 @@ while running:
 		else:
 			radius = int(math.sqrt(math.pow(xstart-sizex,2)+math.pow(ystart-sizey,2)))
 			pygame.draw.circle(screen, color, (xstart,ystart), radius, 0)
-		"""
-		newls = []
-		a = particleClass.Particle(xstart-xoff, ystart-yoff, 2*(xstart-xpos), 2*(ystart-ypos))
-		distance = math.sqrt(math.pow(xpos-xstart,2) + math.pow(xpos-ystart,2))
-		mass = math.pow(distance,4)
-		a.mass = mass
-		a.active = creatingactive
-		newls.append(a)
-		newpaths = []
-		for x in ls:
-			b = x
-			b.active = False
-			newls.append(b)
-		predict = 10
-		for i in range(predict):
-			particleClass.update(newls)
-			b = PathItem((int(newls[0].position[0]),int(newls[0].position[1])), newls[0].color)
-			newpaths.append(b)
-		for b in newpaths:
-			pygame.draw.circle(screen, b.color, (int(b.position[0])+xoff,int(b.position[1])+yoff), 0, 0)
-		"""
+		
+
 	pygame.display.flip()
 	ls = [x for x in ls if not x.delete]
 	if not pause:
