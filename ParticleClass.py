@@ -15,8 +15,8 @@ class Particle:
 		self.path     = []							  #array of points (x,y)
 
 	@classmethod
-	def initRandomParticle(self, systemRadius, maxSize):
-		position = (random.randrange(0,systemRadius),random.randrange(0,systemRadius))
+	def initRandomParticle(self, systemRadius, maxSize, systemCenter):
+		position = (random.randrange(systemCenter[0],systemRadius),random.randrange(systemCenter[1],systemRadius))  #this creates a square system
 		velocity = (random.randrange(-50,50),random.randrange(-50,50))					  	  
 		mass     = random.lognormvariate(1,6)
 		radius   = math.pow(self.mass,0.25) 
