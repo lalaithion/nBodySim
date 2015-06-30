@@ -1,7 +1,9 @@
 import SystemClass
+import ParticleClass
 import TempParticleSubclass as temp
 
 import pygame
+import math
 import sys
 from guppy import hpy
 
@@ -47,6 +49,12 @@ while running:
 					pause = 0
 				elif pause == 0:
 					pause = 1
+			elif event.key == pygame.K_MINUS:
+				ParticleClass.timestep = ParticleClass.timestep/math.sqrt(10)
+			elif event.key == pygame.K_EQUALS:
+				ParticleClass.timestep = ParticleClass.timestep*math.sqrt(10)
+			elif event.key == pygame.K_0:
+				ParticleClass.timestep = .01
 
 		if pause == 2:
 			if event.type == pygame.MOUSEBUTTONDOWN:

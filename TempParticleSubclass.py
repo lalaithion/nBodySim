@@ -25,7 +25,7 @@ class Temp(ParticleClass.Particle):
 			self.velocity = (0,0)
 			return
 		constant = borderToMouse/centerToMouse
-		self.velocity = (constant * (self.position[0]-mousePosition[0]), constant * (self.position[1]-mousePosition[1]))
+		self.velocity = (constant * (self.position[0] - mousePosition[0]+ offset[0]), constant * (self.position[1]-mousePosition[1] + offset[0]))
 
 	def updateStatic(self):
 		self.static = not self.static
