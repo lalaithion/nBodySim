@@ -50,10 +50,8 @@ while running:
 				elif pause == 0:
 					pause = 1
 			elif event.key == pygame.K_MINUS:
-				print ParticleClass.timestep
 				ParticleClass.timestep = ParticleClass.timestep/2
 			elif event.key == pygame.K_EQUALS:
-				print ParticleClass.timestep
 				ParticleClass.timestep = ParticleClass.timestep*2
 			elif event.key == pygame.K_0:
 				ParticleClass.timestep = .01
