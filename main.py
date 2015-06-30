@@ -12,7 +12,7 @@ screen = pygame.display.set_mode((width, height))
 
 memoryTrackerObject = hpy()
 
-offset = (0,0)
+offset = [0,0]
 running = True
 size = True
 pause = 0 	#0 when not paused, 1 when paused, 2 when creating
@@ -45,10 +45,10 @@ while running:
 			elif event.key == pygame.K_z:
 				print h.heap()
 			elif event.key == pygame.K_c: #clear screen
-				del SystemClass.particleList[:]
+				del mainSystem.particleList[:]
 			elif event.key == pygame.K_x: #clear paths
-				for particle in SystemClass.particleList:
-					del particle.paths[:]
+				for particle in mainSystem.particleList:
+					del particle.path[:]
 
 		if pause == 2:
 			if event.type == pygame.MOUSEBUTTONDOWN:
@@ -73,12 +73,13 @@ while running:
 
 	screen.fill((0,0,0))
 	
-	for particle in SystemClass.particleList:
-		paricle.draw(screen, offset)
+	for particle in mainSystem.particleList:
+		particle.draw(screen, offset)
 
 	if pause == 2:
 		if not size:
 			creating.updateRadius(pygame.mouse.get_pos())
+		creating.draw(screen, offset)
 
 	pygame.display.flip()
 
