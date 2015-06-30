@@ -29,9 +29,9 @@ class Temp(ParticleClass.Particle):
 	def updateStatic(self):
 		self.static = not self.static
 		if self.static:
-			self.color = (20,230,20,0)
-		else:
 			self.color = (230,20,20,0)
+		else:
+			self.color = (20,230,20,0)
 
 	def createRealParticle(self):
 		randomcolor = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255),1)

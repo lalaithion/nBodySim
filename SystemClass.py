@@ -18,7 +18,7 @@ class System:
 		if(maxParticles>50):
 			maxParticles = 50
 		for i in range(maxParticles):
-			newParticle = ParticleClass.Particle.initRandomParticle(10,maxSize,(0,0))
+			newParticle = ParticleClass.Particle.initRandomParticle(1000,maxSize,(0,0))
 			particleList.append(newParticle)
 		return self(particleList)
 

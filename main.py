@@ -68,6 +68,7 @@ while running:
 			size = False
 			creating = temp.Temp(event.pos)
 			creating.updateStatic()
+			creating.updateStatic()
 			pause = 2
 		if event.type == pygame.MOUSEBUTTONUP:
 			size = True
@@ -85,10 +86,10 @@ while running:
 
 	if pause == 0:
 		for particle in mainSystem.particleList:
-			if particle.static:
+			if not particle.static:
 				particle.updateVelocity(mainSystem.particleList)
 		for particle in mainSystem.particleList:
-			if particle.static:
+			if not particle.static:
 				particle.updatePosition()
 
 pygame.quit()
