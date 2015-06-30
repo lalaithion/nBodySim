@@ -86,8 +86,8 @@ while running:
 				total = [ls,paths]
 				pickle.dump(total,f)
 			elif event.key == pygame.K_z:
-				print len(paths)
-				print h.heap()
+				#print len(paths)
+				#print h.heap()
 			elif event.key == pygame.K_c: #clear screen
 				del ls[:]
 				del paths[:]
