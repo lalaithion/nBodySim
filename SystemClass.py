@@ -1,14 +1,14 @@
 import ParticleClass
 
 import pickle
-
+import time
 class System:
 	def __init__(self, particleList):
 		self.particleList = particleList
 
 	@classmethod
 	def initFromFile(self, fileName):
-		#file handling
+		particleList = pickle.load(open( fileName, "rb" ) )
 		return self(particleList)
 
 	#generate random system
@@ -32,7 +32,6 @@ class System:
 		del self.particleList[:]
 
 	def saveSystem(self, fileName):
-		name = time.strftime("%H:%M:%S")		#Procedural filenames, later.
+		fileName = time.strftime("%H:%M:%S")		#Procedural filenames, later.
 		saveFile = open(fileName,'w')
-		total = [ls,paths]
-		pickle.dump(total,f)
+		pickle.dump(self.particleList,saveFile)

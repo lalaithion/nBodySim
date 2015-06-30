@@ -18,7 +18,8 @@ size = True
 pause = 0 	#0 when not paused, 1 when paused, 2 when creating
 
 #mainSystem = SystemClass.System([])
-mainSystem = SystemClass.System.initRandom(30,30)
+#mainSystem = SystemClass.System.initRandom(30,30)
+mainSystem = SystemClass.System.initFromFile("14:27:03")
 while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
@@ -38,10 +39,7 @@ while running:
 				elif pause == 0:
 					pause = 1
 			elif event.key == pygame.K_RETURN:
-				name = time.strftime("%H:%M:%S")
-				f = open(name,'w')
-				total = [ls,paths]
-				pickle.dump(total,f)
+				mainSystem.saveSystem("savefile")
 			elif event.key == pygame.K_z:
 				print h.heap()
 			elif event.key == pygame.K_c: #clear screen
@@ -90,7 +88,7 @@ while running:
 				particle.updateVelocity(mainSystem.particleList)
 			if particle.delete:
 				mainSystem.removeParticle(particle)
-				
+
 		for particle in mainSystem.particleList:
 			if not particle.static:
 				particle.updatePosition()
