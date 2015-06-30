@@ -19,7 +19,6 @@ running = True
 size = True
 pause = 0 	#0 when not paused, 1 when paused, 2 when creating
 
-
 mainSystem = SystemClass.System.initRandom(30,30)
 #mainSystem = SystemClass.System.initFromFile("14:27:03")
 while running:
@@ -61,23 +60,23 @@ while running:
 			elif event.key == pygame.K_LEFTBRACKET:
 				for particle in mainSystem.particleList:
 					particle.radius = particle.radius/2
-					particle.position[0] = particle.position[0]/2
-					particle.position[1] = particle.position[1]/2
+					print particle.position[0]
+					particle.position[0] = particle.position[0]/2 + offset[0] /2
+					particle.position[1] = particle.position[1]/2 + offset[1] /2
 					del particle.path[:]
 				offset[0] = offset[0]/2
 				offset[1] = offset[1]/2
 				ParticleClass.zoomOffset = ParticleClass.zoomOffset/2
-				print ParticleClass.zoomOffset
 			elif event.key == pygame.K_RIGHTBRACKET:
 				for particle in mainSystem.particleList:
 					particle.radius = particle.radius*2
-					particle.position[0] = particle.position[0]*2
-					particle.position[1] = particle.position[1]*2
+					particle.position[0] = particle.position[0]*2 + offset[0] *2
+					particle.position[1] = particle.position[1]*2 + offset[1] *2
 					del particle.path[:]
 				offset[0] = offset[0]*2
 				offset[1] = offset[1]*2
 				ParticleClass.zoomOffset = ParticleClass.zoomOffset*2
-			elif event.key == pygame.K_BACKSLASH:
+			elif event.key == pygame.K_p:
 				for particle in mainSystem.particleList:
 					particle.radius = particle.radius/ParticleClass.zoomOffset
 					particle.position[0] = particle.position[0]/ParticleClass.zoomOffset
