@@ -57,6 +57,24 @@ while running:
 					ParticleClass.timestep = ParticleClass.timestep*2
 			elif event.key == pygame.K_0:
 				ParticleClass.timestep = .01
+			elif event.key == pygame.K_LEFTBRACKET:
+				for particle in mainSystem.particleList:
+					particle.radius = particle.radius/2
+					particle.position[0] = particle.position[0]/2
+					particle.position[1] = particle.position[1]/2
+					del particle.path[:]
+				
+				ParticleClass.zoomOffset = ParticleClass.zoomOffset/2
+				print ParticleClass.zoomOffset
+			elif event.key == pygame.K_RIGHTBRACKET:
+				for particle in mainSystem.particleList:
+					particle.radius = particle.radius*2
+					particle.position[0] = particle.position[0]*2
+					particle.position[1] = particle.position[1]*2
+					del particle.path[:]
+
+				ParticleClass.zoomOffset = ParticleClass.zoomOffset*2
+				print ParticleClass.zoomOffset
 
 		if pause == 2:
 			if event.type == pygame.MOUSEBUTTONDOWN:

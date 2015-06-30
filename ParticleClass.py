@@ -5,6 +5,7 @@ import pygame
 import pygame.gfxdraw
 
 timestep = .01
+zoomOffset = 1.0
 
 class Particle:
 
@@ -29,6 +30,7 @@ class Particle:
 	def _calculateAccelerationFrom(self, other): 														#this adds acceleration due to gravity to the particle 'self' based on the mass of 'other'
 		grav = 6.673*math.pow(10,-1) 																	#gravity is 10^10 times more powerful here than in real life; that is the equivalent of scaling the masses by a factor of ten as well.
 		radius = math.sqrt((self.position[0] - other.position[0])**2 + (self.position[1] - other.position[1])**2)								#this uses numpy's algorithm to get the position vector from other to self
+		radius = radius / zoomOffset
 		self._handleCollision(other)
 		accel = [0,0]
 		accel[0] = (other.mass * grav)/(math.pow(radius,2)) * ((other.position[0]-self.position[0])/radius) 		#using the radius above and newton's law of gravitational acceleration, calculate the acceleration vector
@@ -38,6 +40,7 @@ class Particle:
 
 	def _handleCollision(self, other):
 		distance = math.sqrt((self.position[0] - other.position[0])**2 + (self.position[1] - other.position[1])**2)
+		distance = distance / zoomOffset
 		if distance <= self.radius and self.mass > other.mass and not other.static:
 			self.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
 			self.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
