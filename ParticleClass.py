@@ -11,7 +11,7 @@ class Particle:
 		self.radius   = radius 						  #positive int
 		self.color    = color						  #fuple (r,g,b,a)
 		self.static   = False						  #false moves, true does not move
-		self.delete   = False
+		self.delete   = False 						  
 		self.path     = []							  #array of points (x,y)
 
 	@classmethod
@@ -44,8 +44,9 @@ class Particle:
 				if not other.active:																	#and it's not active
 					other.mass += self.mass 															#adds masses together
 					self.delete = True																	#and delete ourselves
+	
 	def updatePosition(self):
-		self.position = self.position + (self.velocity * TIMESTEP[x])								#multiply the velocity by the time to find change in position, and add this change to the inital position
+		self.position = self.position + (self.velocity * TIMESTEP[x])									#multiply the velocity by the time to find change in position, and add this change to the inital position
 	
 	def updateVelocity(self, ls):
 		for particle in ls:

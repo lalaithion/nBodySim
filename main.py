@@ -9,34 +9,7 @@ height = 720
 
 screen = pygame.display.set_mode((width, height))
 
-running = True
-size = True
-xstart, ystart = 0, 0
-sizex, sizey   = 0, 0
-xoff, yoff     = 0, 0
-mass = 0
-pause = False
-creating = False
-creatingactive = True
-h = hpy()
-buildRandomSystem(30)
-
-'''
-f = open("test.txt",'w')
-total = [ls,paths]
-pickle.dump(total,f)
-'''
-
-#This code loads a specific example
-'''
-loadls = []
-f = open("panets_example.txt")
-
-loadls = pickle.load(f)
-
-ls = loadls[0]
-paths = loadls[1]
-'''
+memoryTrackerObject = hpy()
 
 while running:
 	for event in pygame.event.get():
@@ -60,8 +33,8 @@ while running:
 				total = [ls,paths]
 				pickle.dump(total,f)
 			elif event.key == pygame.K_z:
-				#print len(paths)
-				#print h.heap()
+				print len(paths)
+				print h.heap()
 			elif event.key == pygame.K_c: #clear screen
 				del ls[:]
 				del paths[:]
