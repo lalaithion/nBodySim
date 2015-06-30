@@ -18,8 +18,8 @@ size = True
 pause = 0 	#0 when not paused, 1 when paused, 2 when creating
 
 #mainSystem = SystemClass.System([])
-#mainSystem = SystemClass.System.initRandom(30,30)
-mainSystem = SystemClass.System.initFromFile("14:27:03")
+mainSystem = SystemClass.System.initRandom(30,30)
+#mainSystem = SystemClass.System.initFromFile("14:27:03")
 while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
@@ -51,7 +51,7 @@ while running:
 		if pause == 2:
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				pause = 0
-				creating.updateVelocity(event.pos)
+				creating.updateVelocity(event.pos, offset)
 				newParticle = creating.createRealParticle()
 				mainSystem.addParticle(newParticle)
 			elif event.type == pygame.KEYDOWN:
@@ -64,7 +64,7 @@ while running:
 
 		elif event.type == pygame.MOUSEBUTTONDOWN:
 			size = False
-			creating = temp.Temp(event.pos)
+			creating = temp.Temp((event.pos[0] - offset[0], event.pos[1] - offset[1]))
 			creating.updateStatic()
 			creating.updateStatic()
 			pause = 2
@@ -77,7 +77,7 @@ while running:
 		particle.draw(screen, offset)
 	if pause == 2:
 		if not size:
-			creating.updateRadius(pygame.mouse.get_pos())
+			creating.updateRadius(pygame.mouse.get_pos(), offset)
 		creating.draw(screen, offset)
 
 	pygame.display.flip()

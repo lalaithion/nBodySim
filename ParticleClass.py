@@ -3,7 +3,7 @@ import math
 import random
 import pygame
 
-timestep = .01 #THIS NEEDS TO BE FIXED
+timestep = .03 #THIS NEEDS TO BE FIXED
 
 class Particle:
 
