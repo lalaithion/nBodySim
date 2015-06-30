@@ -2,6 +2,7 @@ import numpy
 import math
 import random
 import pygame
+import pygame.gfxdraw
 
 timestep = .01 #THIS NEEDS TO BE FIXED
 
@@ -63,6 +64,7 @@ class Particle:
 		for point in self.path:
 			i += 1
 			pygame.draw.circle(screen, self.color, ((int(point[0]+offset[0]),int(point[1])+offset[1])), 0, 0)
-		pygame.draw.circle(screen, self.color, (int(self.position[0]+offset[0]),int(self.position[1]+offset[1])), int(self.radius), 0)
+		#pygame.draw.circle(screen, self.color, (int(self.position[0]+offset[0]),int(self.position[1]+offset[1])), int(self.radius), 0)
+		pygame.gfxdraw.filled_circle(screen, int(self.position[0]+offset[0]),int(self.position[1]+offset[1]), int(self.radius), self.color)
 		self.path.append((self.position[0],self.position[1]))
 		self.path = self.path[-5000:] #This deletes any points older than 500

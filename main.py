@@ -20,12 +20,13 @@ pause = 0 	#0 when not paused, 1 when paused, 2 when creating
 #mainSystem = SystemClass.System([])
 #mainSystem = SystemClass.System.initRandom(30,30)
 mainSystem = SystemClass.System.initFromFile("14:27:03")
+
 while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			running = False
 		elif event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_a:
+			if event.key   == pygame.K_a:
 				offset[0] += 100
 			elif event.key == pygame.K_d:
 				offset[0] -= 100
@@ -33,20 +34,20 @@ while running:
 				offset[1] += 100
 			elif event.key == pygame.K_s:
 				offset[1] -= 100
-			elif event.key == pygame.K_SPACE:
-				if pause == 1:
-					pause = 0
-				elif pause == 0:
-					pause = 1
+			elif event.key == pygame.K_z:
+				print memoryTrackerObject.heap()
 			elif event.key == pygame.K_RETURN:
 				mainSystem.saveSystem("savefile")
-			elif event.key == pygame.K_z:
-				print h.heap()
 			elif event.key == pygame.K_c: #clear screen
 				del mainSystem.particleList[:]
 			elif event.key == pygame.K_x: #clear paths
 				for particle in mainSystem.particleList:
 					del particle.path[:]
+			elif event.key == pygame.K_SPACE:
+				if pause   == 1:
+					pause = 0
+				elif pause == 0:
+					pause = 1
 
 		if pause == 2:
 			if event.type == pygame.MOUSEBUTTONDOWN:

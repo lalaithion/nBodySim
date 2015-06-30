@@ -2,13 +2,14 @@ import ParticleClass
 
 import math
 import random
+import pygame
 
 class Temp(ParticleClass.Particle):
 	
 	def __init__(self, position):
 		color = (255,255,255,0)
 		velocity = [0,0]
-		position = list(position)
+		position = position
 		mass = 0
 		radius = 0
 		ParticleClass.Particle.__init__(self, position, velocity, radius, mass, color)
@@ -38,4 +39,3 @@ class Temp(ParticleClass.Particle):
 		created = ParticleClass.Particle(self.position, self.velocity, self.radius, self.mass, randomcolor)
 		created.static = self.static
 		return created
-
