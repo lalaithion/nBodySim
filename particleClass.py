@@ -19,7 +19,9 @@ class Particle:
 		self.radius = math.sqrt(math.sqrt(self.mass))
 		self.active = True 																			#all particles are active be default; and inactive particle will exert gravitational acceleration but not experience it
 		self.color = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255)) 		#a random color will be chosen; it can be overwritten later
-		self.delete = False 																		#if this is True, then it will be deleted from the list at the next opporitunity
+		self.delete = False																		#if this is True, then it will be deleted from the list at the next opporitunity
+		self.pathPointArray = []																#path array
+
 	def addForce(self, other): 																	#this adds acceleration due to gravity to the particle 'self' based on the mass of 'other'
 		grav = 6.673*math.pow(10,-1) 																#gravity is 10^10 times more powerful here than in real life; that is the equivalent of scaling the masses by a factor of ten as well.
 		radius = numpy.linalg.norm(other.position - self.position) 									#this uses numpy's algorithm to get the position vector from other to self
@@ -33,7 +35,7 @@ class Particle:
 				return 
 			if self.mass < other.mass:																	#if the other one is bigger
 				if not other.active:																	#and it's not active
-					other.mass += self.mass 															#add the mass of us to this mass
+					other.mass += self.mass #adds masses together															#add the mass of us to this mass
 					self.delete = True																	#and delete ourselves
 		accel = (other.mass * grav)/(math.pow(radius,2)) * ((other.position-self.position)/radius) 	#using the radius above and newton's law of gravitational acceleration, calculate the acceleration vector
 		self.velocity = self.velocity + (accel * TIMESTEP[x]) 											#multiply the acceleration by the time to find delta-v, and add delta-v to the initial velocity.
@@ -48,7 +50,6 @@ class Particle:
 				if branking > otherranking:
 					other = b
 		#Universal Variable Formulation????
-
 
 
 def update(ls): 				#this updates all the particles in ls

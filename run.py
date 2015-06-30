@@ -1,9 +1,6 @@
 import pygame
 import time
 import particleClass
-import random
-import numpy
-import math
 import pickle
 import sys
 from guppy import hpy
