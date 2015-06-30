@@ -16,15 +16,14 @@ class Particle:
 		self.static   = False						  #false moves, true does not move
 		self.delete   = False 						  
 		self.path     = []							  #array of points (x,y)
-
 	@classmethod
 	def initRandomParticle(self, systemRadius, maxSize, systemCenter):
 		position = [random.randrange(systemCenter[0],systemRadius),random.randrange(systemCenter[1],systemRadius)]  #this creates a square system
 		velocity = [random.randrange(-50,50),random.randrange(-50,50)]					  	  
 		mass     = random.lognormvariate(1,6)
-		radius   = math.pow(self.mass,0.25) 
+		radius   = math.pow(mass,0.25) 
 		color    = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255),0)
-		self(position,velocity,radius,mass,color)
+		return self(position,velocity,radius,mass,color)
 
 	def _calculateAccelerationFrom(self, other): 														#this adds acceleration due to gravity to the particle 'self' based on the mass of 'other'
 		grav = 6.673*math.pow(10,-1) 																	#gravity is 10^10 times more powerful here than in real life; that is the equivalent of scaling the masses by a factor of ten as well.
@@ -47,8 +46,6 @@ class Particle:
 				other.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
 				other.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
 				other.mass += self.mass
-
-
 
 	def updatePosition(self):
 		self.position[0] = self.position[0] + (self.velocity[0] * timestep) 	

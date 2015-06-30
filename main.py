@@ -17,8 +17,8 @@ running = True
 size = True
 pause = 0 	#0 when not paused, 1 when paused, 2 when creating
 
-mainSystem = SystemClass.System([])
-
+#mainSystem = SystemClass.System([])
+mainSystem = SystemClass.System.initRandom(30,30)
 while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
@@ -76,7 +76,6 @@ while running:
 	
 	for particle in mainSystem.particleList:
 		particle.draw(screen, offset)
-
 	if pause == 2:
 		if not size:
 			creating.updateRadius(pygame.mouse.get_pos())

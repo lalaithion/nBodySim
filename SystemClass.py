@@ -14,11 +14,12 @@ class System:
 	#generate random system
 	@classmethod
 	def initRandom(self, maxParticles, maxSize):
+		particleList = []
 		if(maxParticles>50):
 			maxParticles = 50
 		for i in range(maxParticles):
-			newParticle = ParticleClass.initRandomParticle()
-			self.particleList.append(newParticle)
+			newParticle = ParticleClass.Particle.initRandomParticle(10,maxSize,(0,0))
+			particleList.append(newParticle)
 		return self(particleList)
 
 	def addParticle(self, particle):
