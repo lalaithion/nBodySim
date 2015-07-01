@@ -9,6 +9,7 @@ import math
 import sys
 from guppy import hpy
 import argparse
+import random
 
 width = 1080
 height = 720
@@ -40,7 +41,7 @@ while running:
 				mainSystem.saveSystem("savefile")
 			elif event.key == pygame.K_c: 			#Clear screen
 				#del mainSystem.particleList[:]
-				x = BlackHoleClass.Blackhole((0,0),(0,0))
+				x = BlackHoleClass.Blackhole([random.randrange(0,600),0] ,(0,0))
 				mainSystem.addParticle(x)
 			elif event.key == pygame.K_x: 			#Clear paths
 				for particle in mainSystem.particleList:
@@ -71,20 +72,17 @@ while running:
 					creating.updateStatic()
 
 		elif event.type == pygame.MOUSEBUTTONDOWN and not mainSystem.pause == 2:
-			print "mouse down"
 			creating = temp.Temp((event.pos[0] - mainSystem.offset[0], event.pos[1] - mainSystem.offset[1]), mainSystem.zoom)
 			mainSystem.pause = 2
 
 		if mainSystem.pause == 2:
 			if event.type == pygame.MOUSEBUTTONDOWN and mainSystem.size:
-				print "mouse down 2"
 				mainSystem.pause = 0
 				mainSystem.size = False
 				creating.updateVelocity(event.pos, mainSystem.offset, mainSystem.zoom)
 				newParticle = creating.createRealParticle()
 				mainSystem.addParticle(newParticle)
 			elif event.type == pygame.MOUSEBUTTONUP:
-				print 'mouse up'
 				mainSystem.size = True
 				if not creating.static:
 					creating.color = (0,255,0,0)
@@ -97,8 +95,5 @@ while running:
 	mainSystem.update(screen)
 	pygame.display.flip()
 	screen.fill(backGroundColor)
-
-
-
-
+	
 pygame.quit()

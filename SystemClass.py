@@ -13,7 +13,7 @@ class System:
 		self.size = False
 		self.pause = 0
 		self.zoom = 1.0
-		self.timestep = .01
+		self.timestep = 0.00125
 
 	@classmethod
 	def initFromFile(self, fileName):
