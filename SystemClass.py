@@ -2,22 +2,26 @@ import ParticleClass
 
 import pickle
 import time
+
 class System:
 
-	def __init__(self, particleList, center, radius):
+	def __init__(self, particleList, offset = [0,0], pause = 0, zoom = 1.0, timestep = .01):
 		self.particleList = particleList
-		self.center = center
-		self.radius = radius
-		self.offset = [0,0]
+		self.offset = offset
+		self.pause = pause
+		self.zoom = zoom
+		self.timestep = timestep
 		self.size = True
-		self.pause = 0
-		self.zoom = 1.0
-		self.timestep = .01
 
 	@classmethod
 	def initFromFile(self, fileName):
-		particleList = pickle.load(open( fileName, "rb" ) )
-		return self(particleList)
+		dataList = pickle.load(open( fileName, "rb" ))
+		offset = dataList[0][0]
+		pause = dataList[0][1]
+		zoom = dataList[0][2]
+		timestep = dataList[0][3]
+		particleList = dataList[1]
+		return self(particleList, offset, pause, zoom, timestep)
 
 	#generate random system
 	@classmethod
@@ -30,7 +34,7 @@ class System:
 		for i in range(maxParticles):
 			newParticle = ParticleClass.Particle.initRandomParticle(radius,maxSize,center)
 			particleList.append(newParticle)
-		return self(particleList, center, radius)
+		return self(particleList)
 
 	def addParticle(self, particle):
 		self.particleList.append(particle)
@@ -42,6 +46,15 @@ class System:
 		del self.particleList[:]
 
 	def saveSystem(self, fileName):
-		fileName = time.strftime("%H:%M:%S")		#Procedural filenames, later.
+		dataList = []
+		systemList = []
+		systemList.append(self.offset)
+		systemList.append(self.pause)
+		systemList.append(self.zoom)
+		systemList.append(self.timestep)
+		dataList.append(systemList)
+		dataList.append(self.particleList)
+		timeString = time.strftime("%H_%M_%S")
+		fileName = "savefile_" + timeString
 		saveFile = open(fileName,'w')
-		pickle.dump(self.particleList,saveFile)
+		pickle.dump(dataList, saveFile)

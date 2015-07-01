@@ -37,7 +37,7 @@ class Particle:
 
 	def _handleCollision(self, other):
 		distance = math.sqrt((self.position[0] - other.position[0])**2 + (self.position[1] - other.position[1])**2)
-		if distance <= self.radius and self.mass > other.mass and not other.static:
+		if distance <= self.radius and self.mass > other.mass:
 			self.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
 			self.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
 			self.mass += other.mass
