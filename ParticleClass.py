@@ -44,12 +44,17 @@ class Particle:
 			self.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
 			self.mass += other.mass
 			other.delete = True
+			self.updateRadius()
 		elif not other.static or (self.mass < other.mass and not self.static):
 			if distance <= other.radius:
 				other.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
 				other.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
 				other.mass += self.mass
 				self.delete = True
+				other.updateRadius()
+
+	def updateRadius(self):
+		self.radius = math.pow(self.mass,0.25) 
 
 	def updatePosition(self, timestep):
 		self.position[0] = self.position[0] + (self.velocity[0] * timestep)	#zoomOffset scales velocity to zoom level
