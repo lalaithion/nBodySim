@@ -7,7 +7,7 @@ import pygame
 
 class Goal(ParticleClass.Particle):
 	def __init__(self, position, radius):
-		color = (255,255,255,0)
+		color = (120,120,120,0)
 		position = list(position)
 		ParticleClass.Particle.__init__(self, position, [0,0], radius, 0, color)
 		self.static = True
