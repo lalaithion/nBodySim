@@ -16,8 +16,8 @@ backGroundColor = (57,52,61)
 screen = pygame.display.set_mode((width, height))
 
 memoryTrackerObject = hpy()
-
-mainSystem = SystemClass.System.initRandom(30,30)
+mainSystem = SystemClass.System([],0,0)
+#mainSystem = SystemClass.System.initRandom(30,30)
 #mainSystem = SystemClass.System.initFromFile("19:37:23")
 running = True
 while running:
@@ -39,8 +39,8 @@ while running:
 				print "Game Saved"
 				mainSystem.saveSystem("savefile")
 			elif event.key == pygame.K_c: 			#Clear screen
-				del mainSystem.particleList[:]
-				x = BlackHoleClass.Blackhole((0,0),(0,0),10)
+				#del mainSystem.particleList[:]
+				x = BlackHoleClass.Blackhole((0,0),(0,0))
 				mainSystem.addParticle(x)
 			elif event.key == pygame.K_x: 			#Clear paths
 				for particle in mainSystem.particleList:

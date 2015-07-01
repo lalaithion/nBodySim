@@ -31,8 +31,13 @@ class Particle:
 		radius = math.sqrt((self.position[0] - other.position[0])**2 + (self.position[1] - other.position[1])**2)								#this uses numpy's algorithm to get the position vector from other to self
 		self._handleCollision(other)
 		accel = [0,0]
-		accel[0] = (other.mass * grav)/(math.pow(radius,2)) * ((other.position[0]-self.position[0])/radius) 		#using the radius above and newton's law of gravitational acceleration, calculate the acceleration vector
-		accel[1] = (other.mass * grav)/(math.pow(radius,2)) * ((other.position[1]-self.position[1])/radius)
+		try:
+			accel[0] = (other.mass * grav)/(math.pow(radius,2)) * ((other.position[0]-self.position[0])/radius) 		#using the radius above and newton's law of gravitational acceleration, calculate the acceleration vector
+			accel[1] = (other.mass * grav)/(math.pow(radius,2)) * ((other.position[1]-self.position[1])/radius)
+		except ZeroDivisionError:
+			accel[0] = 0
+			accel[1] = 1
+			
 		self.velocity[0] = (self.velocity[0] + (accel[0] * timestep) )	
 		self.velocity[1] = (self.velocity[1] + (accel[1] * timestep) )	
 
