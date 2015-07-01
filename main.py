@@ -1,3 +1,4 @@
+import LevelClass
 import SystemClass
 import ParticleClass
 import TempParticleSubclass as temp
@@ -17,18 +18,11 @@ parser.add_argument("-r", type=int)
 parser.add_argument("-f")
 options = parser.parse_args()
 
-if options.f == None and options.r == None:
-	mainSystem = SystemClass.System.initRandom(30, 30)
-elif options.f == None:
-	mainSystem = SystemClass.System.initRandom(int(options.r), 30)
-else:
-	mainSystem = SystemClass.System.initFromFile(options.f)
-
-
-
 memoryTrackerObject = hpy()
 
+mainSystem = SystemClass.System.initRandom(30,30)
 running = True
+
 while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
@@ -81,6 +75,8 @@ while running:
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_q:
 					creating.updateStatic()
+				if event.key == pygame.K_e:
+					creating.updateGoal()
 				if event.key == pygame.K_SPACE:
 					mainSystem.pause = 0
 					newParticle = creating.createRealParticle()
@@ -110,11 +106,11 @@ while running:
 		for particle in mainSystem.particleList:
 			if not particle.static:
 				particle.updateVelocity(mainSystem.particleList, mainSystem.timestep)
-			if particle.delete:
-				mainSystem.removeParticle(particle)
 
 		for particle in mainSystem.particleList:
 			if not particle.static:
 				particle.updatePosition(mainSystem.timestep)
+			if particle.delete:
+				mainSystem.removeParticle(particle)
 
 pygame.quit()

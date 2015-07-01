@@ -15,6 +15,7 @@ class Particle:
 		self.static   = False						  #false moves, true does not move
 		self.delete   = False 						  
 		self.path     = []							  #array of points (x,y)
+		self.type     = "default"
 
 	@classmethod
 	def initRandomParticle(self, systemRadius, maxSize, systemCenter):
@@ -37,17 +38,18 @@ class Particle:
 
 	def _handleCollision(self, other):
 		distance = math.sqrt((self.position[0] - other.position[0])**2 + (self.position[1] - other.position[1])**2)
-		if distance <= self.radius and self.mass > other.mass:
-			self.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
-			self.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
-			self.mass += other.mass
-			other.delete = True
-		elif not other.static or (self.mass < other.mass and not self.static):
-			if distance <= other.radius:
-				other.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
-				other.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
-				other.mass += self.mass
-				self.delete = True
+		if other.type is not "goal":
+			if distance <= self.radius and self.mass > other.mass:
+				self.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
+				self.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
+				self.mass += other.mass
+				other.delete = True
+			elif not other.static or (self.mass < other.mass and not self.static):
+				if distance <= other.radius:
+					other.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
+					other.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
+					other.mass += self.mass
+					self.delete = True
 
 	def updatePosition(self, timestep):
 		self.position[0] = self.position[0] + (self.velocity[0] * timestep)	#zoomOffset scales velocity to zoom level
