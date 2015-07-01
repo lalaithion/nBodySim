@@ -10,7 +10,6 @@ class Temp(ParticleClass.Particle):
 		color = (255,255,255,0)
 		velocity = [0,0]
 		position = list(position)
-		position [(x/zoom) for x in position]
 		mass = 0
 		radius = 0
 		ParticleClass.Particle.__init__(self, position, velocity, radius, mass, color)
