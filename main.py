@@ -63,7 +63,7 @@ while running:
 		if mainSystem.pause == 2:					#handle new particle creation
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				mainSystem.pause = 0
-				creating.updateVelocity(event.pos, mainSystem.offset)
+				creating.updateVelocity(event.pos, mainSystem.offset, mainSystem.zoom)
 				newParticle = creating.createRealParticle()
 				mainSystem.addParticle(newParticle)
 			elif event.type == pygame.KEYDOWN:
@@ -89,7 +89,7 @@ while running:
 		particle.draw(screen, mainSystem.offset, mainSystem.zoom)
 	if mainSystem.pause == 2:
 		if not mainSystem.size:
-			creating.updateRadius(pygame.mouse.get_pos(), mainSystem.offset)
+			creating.updateRadius(pygame.mouse.get_pos(), mainSystem.offset, mainSystem.zoom)
 		creating.draw(screen, mainSystem.offset, mainSystem.zoom)
 
 	pygame.display.flip()
