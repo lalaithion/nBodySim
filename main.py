@@ -22,52 +22,45 @@ while running:
 		if event.type == pygame.QUIT:
 			running = False
 		elif event.type == pygame.KEYDOWN:
-			if event.key   == pygame.K_a:
-				mainSystem.offset[0] += 100
-			elif event.key == pygame.K_d:
+			if event.key   == pygame.K_a:			#Move Screen left
+				mainSystem.offset[0] += 108
+			elif event.key == pygame.K_d:			#Move Screen right
 				mainSystem.offset[0] -= 100
-			elif event.key == pygame.K_w:
-				mainSystem.offset[1] += 100
+			elif event.key == pygame.K_w:	
+				mainSystem.offset[1] += 100			#Move Screen up
 			elif event.key == pygame.K_s:
-				mainSystem.offset[1] -= 100
-			elif event.key == pygame.K_z:
+				mainSystem.offset[1] -= 100 		#Move Screen down
+			elif event.key == pygame.K_z:			#Print Memory
 				print memoryTrackerObject.heap()
-			elif event.key == pygame.K_RETURN:
+			elif event.key == pygame.K_RETURN:		#Save Current system
 				mainSystem.saveSystem("savefile")
-			elif event.key == pygame.K_c: #clear screen
+			elif event.key == pygame.K_c: 			#Clear screen
 				del mainSystem.particleList[:]
-			elif event.key == pygame.K_x: #clear paths
+			elif event.key == pygame.K_x: 			#Clear paths
 				for particle in mainSystem.particleList:
 					del particle.path[:]
-			elif event.key == pygame.K_SPACE:
+			elif event.key == pygame.K_SPACE:		#Pause Simulation
 				if mainSystem.pause   == 1:
 					mainSystem.pause = 0
 				elif mainSystem.pause == 0:
 					mainSystem.pause = 1
-			elif event.key == pygame.K_MINUS:
+			elif event.key == pygame.K_MINUS:		#Decrease timestep, slow down
 				if mainSystem.timestep > 0.00125:
 					mainSystem.timestep = mainSystem.timestep/2
 			elif event.key == pygame.K_EQUALS:
-				if mainSystem.timestep<0.08:
+				if mainSystem.timestep<0.08:		#Increase timestep, speed up
 					mainSystem.timestep = mainSystem.timestep*2
 			elif event.key == pygame.K_0:
 				mainSystem.timestep = .01
-				
-			elif event.key == pygame.K_LEFTBRACKET:
+			elif event.key == pygame.K_LEFTBRACKET:	#Zoom out
 				mainSystem.zoom = mainSystem.zoom/2
-				print mainSystem.zoom
-			elif event.key == pygame.K_RIGHTBRACKET:
+			elif event.key == pygame.K_RIGHTBRACKET:#Zoom in
 				mainSystem.zoom = mainSystem.zoom*2
-				print mainSystem.zoom
-
-			elif event.key == pygame.K_p:
+			elif event.key == pygame.K_p:			#reset offset and zoom
 				mainSystem.offset = [0,0]
 				mainSystem.zoom = 1.0
-				print mainSystem.zoom
 
-
-
-		if mainSystem.pause == 2:
+		if mainSystem.pause == 2:					#handle new particle creation
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				mainSystem.pause = 0
 				creating.updateVelocity(event.pos, mainSystem.offset)
@@ -87,11 +80,11 @@ while running:
 			creating.updateStatic()
 			creating.updateStatic()
 			mainSystem.pause = 2
+
 		if event.type == pygame.MOUSEBUTTONUP:
 			mainSystem.size = True
 
 	screen.fill((0,0,0))
-	
 	for particle in mainSystem.particleList:
 		particle.draw(screen, mainSystem.offset, mainSystem.zoom)
 	if mainSystem.pause == 2:
@@ -113,4 +106,3 @@ while running:
 				particle.updatePosition(mainSystem.timestep)
 
 pygame.quit()
-

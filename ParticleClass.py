@@ -42,17 +42,12 @@ class Particle:
 			self.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
 			self.mass += other.mass
 			other.delete = True
-			self.updateRadius()
 		elif not other.static or (self.mass < other.mass and not self.static):
 			if distance <= other.radius:
 				other.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
 				other.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
 				other.mass += self.mass
 				self.delete = True
-				other.updateRadius()
-
-	def updateRadius(self):
-		self.radius = math.pow(self.mass,0.25) 
 
 	def updatePosition(self, timestep):
 		self.position[0] = self.position[0] + (self.velocity[0] * timestep)	#zoomOffset scales velocity to zoom level
@@ -69,7 +64,5 @@ class Particle:
 			i += 1
 			pygame.draw.circle(screen, self.color, ((int((point[0]+offset[0]) * zoom),int((point[1]+offset[1])* zoom))), 0, 0)
 		pygame.draw.circle(screen, self.color, (int((self.position[0]+offset[0])*zoom),int((self.position[1]+offset[1])*zoom)), int(self.radius*zoom), 0)
-		#pygame.gfxdraw.aacircle(screen, int(self.position[0]+offset[0]),int(self.position[1]+offset[1]), int(self.radius), self.color)
-		#pygame.gfxdraw.filled_circle(screen, int(self.position[0]+offset[0]),int(self.position[1]+offset[1]), int(self.radius), self.color)
 		self.path.append((self.position[0],self.position[1]))
 		self.path = self.path[-5000:] #This deletes any points older than 500
