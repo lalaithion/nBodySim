@@ -54,16 +54,17 @@ while running:
 				mainSystem.timestep = .01
 				
 			elif event.key == pygame.K_LEFTBRACKET:
-				mainSystem.offset[0] = mainSystem.offset[0]/2
-				mainSystem.offset[1] = mainSystem.offset[1]/2
 				mainSystem.zoom = mainSystem.zoom/2
+				print mainSystem.zoom
 			elif event.key == pygame.K_RIGHTBRACKET:
-				mainSystem.offset[0] = mainSystem.offset[0]*2
-				mainSystem.offset[1] = mainSystem.offset[1]*2
 				mainSystem.zoom = mainSystem.zoom*2
+				print mainSystem.zoom
+
 			elif event.key == pygame.K_p:
 				mainSystem.offset = [0,0]
 				mainSystem.zoom = 1.0
+				print mainSystem.zoom
+
 
 
 		if mainSystem.pause == 2:

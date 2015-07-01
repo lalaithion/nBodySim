@@ -11,7 +11,7 @@ class System:
 		self.offset = [0,0]
 		self.size = True
 		self.pause = 0
-		self.zoom = 1
+		self.zoom = 1.0
 		self.timestep = .01
 
 	@classmethod
