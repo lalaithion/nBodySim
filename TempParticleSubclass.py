@@ -17,7 +17,7 @@ class Temp(ParticleClass.Particle):
 		ParticleClass.Particle.__init__(self, position, velocity, radius, mass, color)
 
 	def updateRadius(self, mousePosition, offset, zoom):
-		self.radius = math.sqrt(math.pow((self.position[0] - mousePosition[0]/zoom + offset[0]/zoom),2) + math.pow((self.position[1] - mousePosition[1]/zoom + offset[1]/zoom),2))
+		self.radius = math.sqrt(math.pow((self.position[0]/zoom - mousePosition[0]/zoom + offset[0]/zoom),2) + math.pow((self.position[1] - mousePosition[1]/zoom + offset[1]/zoom),2))
 		self.mass = math.pow(self.radius,4)
 
 	def updateVelocity(self, mousePosition, offset, zoom):

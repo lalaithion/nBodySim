@@ -2,6 +2,7 @@ import ParticleClass
 
 import pickle
 import time
+import pygame
 class System:
 
 	def __init__(self, particleList, center, radius):
@@ -9,7 +10,7 @@ class System:
 		self.center = center
 		self.radius = radius
 		self.offset = [0,0]
-		self.size = True
+		self.size = False
 		self.pause = 0
 		self.zoom = 1.0
 		self.timestep = .01
@@ -17,8 +18,7 @@ class System:
 	@classmethod
 	def initFromFile(self, fileName):
 		particleList = pickle.load(open( fileName, "rb" ) )
-		return self(particleList)
-
+		return self(particleList,0,0)
 	#generate random system
 	@classmethod
 	def initRandom(self, maxParticles, maxSize):
@@ -45,3 +45,16 @@ class System:
 		fileName = time.strftime("%H:%M:%S")		#Procedural filenames, later.
 		saveFile = open(fileName,'w')
 		pickle.dump(self.particleList,saveFile)
+
+	def update(self,screen):
+		if not self.pause:
+			for particle in self.particleList:	#update all particle velocitys
+				if not particle.static:
+					particle.updateVelocity(self.particleList, self.timestep)
+				if particle.delete:
+					self.removeParticle(particle)
+			for particle in self.particleList:  #update all particle positions
+				particle.updatePosition(self.timestep)
+
+		for particle in self.particleList:
+			particle.draw(screen, self.offset, self.zoom)

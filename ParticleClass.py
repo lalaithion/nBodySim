@@ -15,6 +15,7 @@ class Particle:
 		self.static   = False						  #false moves, true does not move
 		self.delete   = False 						  
 		self.path     = []							  #array of points (x,y)
+		self.type     = "basic"						  #designates particle type
 
 	@classmethod
 	def initRandomParticle(self, systemRadius, maxSize, systemCenter):
@@ -35,8 +36,15 @@ class Particle:
 		self.velocity[0] = (self.velocity[0] + (accel[0] * timestep) )	
 		self.velocity[1] = (self.velocity[1] + (accel[1] * timestep) )	
 
-	def _handleCollision(self, other):
+	def _distanceToParticle(self, other):
 		distance = math.sqrt((self.position[0] - other.position[0])**2 + (self.position[1] - other.position[1])**2)
+		return distance
+	def _distanceBetweenPoints(self, a1, a2):
+		distance = math.sqrt((a1[0] - a2[0])**2 + (a1[1] - a2[1])**2)
+		return distance
+
+	def _handleCollision(self, other):
+		distance = self._distanceToParticle(other)
 		if distance <= self.radius and self.mass > other.mass and not other.static:
 			self.velocity[0] = ((self.mass * self.velocity[0]) + (other.mass * other.velocity[0])) / (self.mass + other.mass)
 			self.velocity[1] = ((self.mass * self.velocity[1]) + (other.mass * other.velocity[1])) / (self.mass + other.mass)
@@ -65,4 +73,4 @@ class Particle:
 			pygame.draw.circle(screen, self.color, ((int((point[0]+offset[0]) * zoom),int((point[1]+offset[1])* zoom))), 0, 0)
 		pygame.draw.circle(screen, self.color, (int((self.position[0]+offset[0])*zoom),int((self.position[1]+offset[1])*zoom)), int(self.radius*zoom), 0)
 		self.path.append((self.position[0],self.position[1]))
-		self.path = self.path[-5000:] #This deletes any points older than 500
+		self.path = self.path[-1500:] #This deletes any points older than 500
