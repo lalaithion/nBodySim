@@ -6,17 +6,18 @@ import pygame
 
 class Temp(ParticleClass.Particle):
 	
-	def __init__(self, position):
+	def __init__(self, position, zoom):
 		color = (255,255,255,0)
 		velocity = [0,0]
 		position = list(position)
+		position [(x/zoom) for x in position]
 		mass = 0
 		radius = 0
 		ParticleClass.Particle.__init__(self, position, velocity, radius, mass, color)
 
 	def updateRadius(self, mousePosition, offset):
 		self.radius = math.sqrt(math.pow((self.position[0] - mousePosition[0] + offset[0]),2) + math.pow((self.position[1] - mousePosition[1] + offset[1]),2))
-		self.mass = math.pow(self.radius,4)/ParticleClass.zoomOffset
+		self.mass = math.pow(self.radius,4)
 
 	def updateVelocity(self, mousePosition, offset):
 		centerToMouse = math.sqrt(math.pow((self.position[0] - mousePosition[0] + offset[0]),2) + math.pow((self.position[1] - mousePosition[1] + offset[1]),2))
