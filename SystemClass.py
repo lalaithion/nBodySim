@@ -49,8 +49,7 @@ class System:
 	def update(self,screen):
 		if not self.pause:
 			for particle in self.particleList:	#update all particle velocitys
-				if not particle.static:
-					particle.updateVelocity(self.particleList, self.timestep)
+				particle.updateVelocity(self.particleList, self.timestep)
 				if particle.delete:
 					self.removeParticle(particle)
 			for particle in self.particleList:  #update all particle positions

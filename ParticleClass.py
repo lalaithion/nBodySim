@@ -28,7 +28,7 @@ class Particle:
 
 	def updateVelocity(self, ls, timestep):
 		for particle in ls:
-			if particle.type == "Wormhole":
+			if particle.static:
 				particle.velocity =[0,0]
 			if self is not particle:
 				self._calculateAccelerationFrom(particle, timestep)
@@ -71,9 +71,7 @@ class Particle:
 		self.position[1] = self.position[1] + (self.velocity[1] * timestep)								#multiply the velocity by the time to find change in position, and add this change to the inital position
 
 	def draw(self, screen, offset, zoom):
-		i = 1
 		for point in self.path:
-			i += 1
 			pygame.draw.circle(screen, self.color, ((int((point[0]+offset[0]) * zoom),int((point[1]+offset[1])* zoom))), 0, 0)
 		pygame.draw.circle(screen, self.color, (int((self.position[0]+offset[0])*zoom),int((self.position[1]+offset[1])*zoom)), int(self.radius*zoom), 0)
 		self.path.append((self.position[0],self.position[1]))
