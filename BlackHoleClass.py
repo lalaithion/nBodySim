@@ -26,7 +26,11 @@ class Blackhole(ParticleClass.Particle):
 			if self.type == "Wormhole":
 				print "teleport"
 				if self._distanceBetweenPoints(self.position, other.position) < (self.radius + other.radius):
-					other.position = self.position2
+					
+					other.position[0] = self.position2[0] # Careful assigning arrays points it to
+					other.position[1] = self.position2[1]
+					# * other.position = & self.position
+					#so when other.position was updated it updated position 2
 					print self.position2
 			else:
 				if(self.type == "Blackhole" and other.type == "Blackhole"):
@@ -55,6 +59,7 @@ class Blackhole(ParticleClass.Particle):
 
 	def draw(self, screen, offset, zoom):
 		if self.position2:
+			print self.position2
 			pygame.draw.circle(screen, (255,255,255,0.5), (int((self.position2[0]+offset[0])*zoom),int((self.position2[1]+offset[1])*zoom)), int(self.radius*zoom), 0)
 		ParticleClass.Particle.draw(self,screen,offset,zoom)
 

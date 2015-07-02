@@ -61,7 +61,7 @@ class System:
 		pickle.dump(self.particleList,saveFile)
 
 	def update(self,screen):
-		if not self.pause:
+		if not self.pause or self.pause ==2:
 			for particle in self.particleList:	#update all particle velocitys
 				particle.updateVelocity(self.particleList, self.timestep)
 				if particle.delete:
@@ -70,5 +70,5 @@ class System:
 			for particle in self.particleList:  #update all particle positions
 				particle.updatePosition(self.timestep)
 
-			for particle in self.particleList:
-				particle.draw(screen, self.offset, self.zoom)
+		for particle in self.particleList:
+			particle.draw(screen, self.offset, self.zoom)

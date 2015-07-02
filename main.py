@@ -55,9 +55,7 @@ while running:
 				print "Game Saved"
 				mainSystem.saveSystem("savefile")
 			elif event.key == pygame.K_c: 			#Clear screen
-				#del mainSystem.particleList[:]
-				x = BlackHoleClass.Blackhole([random.randrange(0,600),0] ,(0,0))
-				mainSystem.addParticle(x)
+				del mainSystem.particleList[:]
 			elif event.key == pygame.K_x: 			#Clear paths
 				for particle in mainSystem.particleList:
 					del particle.path[:]
@@ -84,7 +82,10 @@ while running:
 				mainSystem.offset = [0,0]
 				mainSystem.zoom = 1.0
 			elif event.key == pygame.K_q:
-					creating.updateStatic()
+				creating.updateStatic()
+			elif event.key == pygame.K_b:
+				x = BlackHoleClass.Blackhole([random.randrange(0,600),0] ,(0,0))
+				mainSystem.addParticle(x)
 
 		elif event.type == pygame.MOUSEBUTTONDOWN and not mainSystem.pause == 2:
 			creating = temp.Temp((event.pos[0] - mainSystem.offset[0], event.pos[1] - mainSystem.offset[1]), mainSystem.zoom)
@@ -108,6 +109,7 @@ while running:
 		creating.draw(screen, mainSystem.offset, mainSystem.zoom)
 
 	mainSystem.update(screen)
+
 	pygame.display.flip()
 	screen.fill(backGroundColor)
 	
