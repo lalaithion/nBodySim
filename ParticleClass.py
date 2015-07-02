@@ -10,7 +10,7 @@ class Particle:
 		self.position = list(position)					  #list [x,y]
 		self.velocity = list(velocity)					  #list [x,y]
 		self.mass     = mass						  #int positive
-		self.radius   = radius 						  #positive int
+		self.radius   = radius + 1 						  #positive int
 		self.color    = color						  #fuple (r,g,b,a)
 		self.static   = False						  #false moves, true does not move
 		self.delete   = False 						  
@@ -58,10 +58,10 @@ class Particle:
 				other.delete = True
 				self.mass += other.mass
 
-
 	def _distanceToParticle(self, other): #These need to account for zoom
 		distance = math.sqrt((self.position[0] - other.position[0])**2 + (self.position[1] - other.position[1])**2)
 		return distance
+
 	def _distanceBetweenPoints(self, a1, a2):
 		distance = math.sqrt((a1[0] - a2[0])**2 + (a1[1] - a2[1])**2)
 		return distance

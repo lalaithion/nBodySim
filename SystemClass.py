@@ -15,7 +15,7 @@ class System:
 		self.size = True
 
 	@classmethod
-	def initFromFile(self, fileName):
+	def initFromFile1(self, fileName):
 		dataList = pickle.load(open( fileName, "rb" ))
 		offset = dataList[0][0]
 		pause = dataList[0][1]
@@ -23,6 +23,17 @@ class System:
 		timestep = dataList[0][3]
 		particleList = dataList[1]
 		return self(particleList, offset, pause, zoom, timestep)
+
+	@classmethod
+	def initFromFileX(self, filename):
+		dataList = pickle.load(open( fileName, "rb" ))
+		if dataList[0][0] == "2":
+			offset = dataList[0][1]
+			pause = dataList[0][2]
+			zoom = dataList[0][3]
+			timestep = dataList[0][4]
+			particleList = dataList[1]
+			return self(particleList, offset, pause, zoom, timestep)
 
 	#generate random system
 	@classmethod
@@ -47,8 +58,10 @@ class System:
 		del self.particleList[:]
 
 	def saveSystem(self, fileName):
+		version = "2"
 		dataList = []
 		systemList = []
+		systemList.append(version)
 		systemList.append(self.offset)
 		systemList.append(self.pause)
 		systemList.append(self.zoom)
