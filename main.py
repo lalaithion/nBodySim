@@ -1,17 +1,24 @@
 import SystemClass
 import ParticleClass
+import BlackHoleClass
 import TempParticleSubclass as temp
+
 
 import pygame
 import math
 import sys
 from guppy import hpy
 import argparse
+import random
 
 width = 1080
 height = 720
+backGroundColor = (57,52,61)
 screen = pygame.display.set_mode((width, height))
 
+#mainSystem = SystemClass.System([],0,0)
+#mainSystem = SystemClass.System.initRandom(30,30)
+#mainSystem = SystemClass.System.initFromFile("19:37:23")
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", type=int)
 parser.add_argument("-f")
@@ -35,16 +42,17 @@ while running:
 			running = False
 		elif event.type == pygame.KEYDOWN:
 			if event.key   == pygame.K_a:			#Move Screen left
-				mainSystem.offset[0] += 108
+				mainSystem.offset[0] += (150 / mainSystem.zoom)
 			elif event.key == pygame.K_d:			#Move Screen right
-				mainSystem.offset[0] -= 100
-			elif event.key == pygame.K_w:	
-				mainSystem.offset[1] += 100			#Move Screen up
-			elif event.key == pygame.K_s:
-				mainSystem.offset[1] -= 100 		#Move Screen down
+				mainSystem.offset[0] -= (150 / mainSystem.zoom)
+			elif event.key == pygame.K_w:			#Move Screen up
+				mainSystem.offset[1] += (150 / mainSystem.zoom)		
+			elif event.key == pygame.K_s:			#Move Screen down
+				mainSystem.offset[1] -= (150 / mainSystem.zoom)
 			elif event.key == pygame.K_z:			#Print Memory
 				print memoryTrackerObject.heap()
 			elif event.key == pygame.K_RETURN:		#Save Current system
+				print "Game Saved"
 				mainSystem.saveSystem("savefile")
 			elif event.key == pygame.K_c: 			#Clear screen
 				del mainSystem.particleList[:]
@@ -65,56 +73,44 @@ while running:
 			elif event.key == pygame.K_0:
 				mainSystem.timestep = .01
 			elif event.key == pygame.K_LEFTBRACKET:	#Zoom out
-				mainSystem.zoom = mainSystem.zoom/2
+				if mainSystem.zoom >0.25:
+					mainSystem.zoom = mainSystem.zoom/2
 			elif event.key == pygame.K_RIGHTBRACKET:#Zoom in
-				mainSystem.zoom = mainSystem.zoom*2
+				if mainSystem.zoom < 4:
+					mainSystem.zoom = mainSystem.zoom*2
 			elif event.key == pygame.K_p:			#reset offset and zoom
 				mainSystem.offset = [0,0]
 				mainSystem.zoom = 1.0
+			elif event.key == pygame.K_q:
+				creating.updateStatic()
+			elif event.key == pygame.K_b:
+				x = BlackHoleClass.Blackhole([random.randrange(0,600),0] ,(0,0))
+				mainSystem.addParticle(x)
 
-		if mainSystem.pause == 2:					#handle new particle creation
-			if event.type == pygame.MOUSEBUTTONDOWN:
+		elif event.type == pygame.MOUSEBUTTONDOWN and not mainSystem.pause == 2:
+			creating = temp.Temp((event.pos[0] - mainSystem.offset[0], event.pos[1] - mainSystem.offset[1]), mainSystem.zoom)
+			mainSystem.pause = 2
+
+		if mainSystem.pause == 2:
+			if event.type == pygame.MOUSEBUTTONDOWN and mainSystem.size:
 				mainSystem.pause = 0
+				mainSystem.size = False
 				creating.updateVelocity(event.pos, mainSystem.offset, mainSystem.zoom)
 				newParticle = creating.createRealParticle()
 				mainSystem.addParticle(newParticle)
-			elif event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_q:
-					creating.updateStatic()
-				if event.key == pygame.K_SPACE:
-					mainSystem.pause = 0
-					newParticle = creating.createRealParticle()
-					mainSystem.addParticle(newParticle)
+			elif event.type == pygame.MOUSEBUTTONUP:
+				mainSystem.size = True
+				if not creating.static:
+					creating.color = (0,255,0,0)
 
-		elif event.type == pygame.MOUSEBUTTONDOWN:
-			mainSystem.size = False
-			creating = temp.Temp((event.pos[0] - mainSystem.offset[0], event.pos[1] - mainSystem.offset[1]), mainSystem.zoom)
-			creating.updateStatic()
-			creating.updateStatic()
-			mainSystem.pause = 2
-
-		if event.type == pygame.MOUSEBUTTONUP:
-			mainSystem.size = True
-
-	screen.fill((0,0,0))
-	for particle in mainSystem.particleList:
-		particle.draw(screen, mainSystem.offset, mainSystem.zoom)
-	if mainSystem.pause == 2:
+	if mainSystem.pause == 2:				   #check for drawing new object
 		if not mainSystem.size:
 			creating.updateRadius(pygame.mouse.get_pos(), mainSystem.offset, mainSystem.zoom)
 		creating.draw(screen, mainSystem.offset, mainSystem.zoom)
 
+	mainSystem.update(screen)
+
 	pygame.display.flip()
-
-	if mainSystem.pause == 0:
-		for particle in mainSystem.particleList:
-			if not particle.static:
-				particle.updateVelocity(mainSystem.particleList, mainSystem.timestep)
-			if particle.delete:
-				mainSystem.removeParticle(particle)
-
-		for particle in mainSystem.particleList:
-			if not particle.static:
-				particle.updatePosition(mainSystem.timestep)
-
+	screen.fill(backGroundColor)
+	
 pygame.quit()

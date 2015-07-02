@@ -2,6 +2,7 @@ import ParticleClass
 
 import pickle
 import time
+import pygame
 
 class System:
 
@@ -57,4 +58,17 @@ class System:
 		timeString = time.strftime("%H_%M_%S")
 		fileName = "savefile_" + timeString
 		saveFile = open(fileName,'w')
-		pickle.dump(dataList, saveFile)
+		pickle.dump(self.particleList,saveFile)
+
+	def update(self,screen):
+		if not self.pause or self.pause ==2:
+			for particle in self.particleList:	#update all particle velocitys
+				particle.updateVelocity(self.particleList, self.timestep)
+				if particle.delete:
+					self.removeParticle(particle)
+
+			for particle in self.particleList:  #update all particle positions
+				particle.updatePosition(self.timestep)
+
+		for particle in self.particleList:
+			particle.draw(screen, self.offset, self.zoom)
