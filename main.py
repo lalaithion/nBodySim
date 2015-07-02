@@ -16,10 +16,25 @@ height = 720
 backGroundColor = (57,52,61)
 screen = pygame.display.set_mode((width, height))
 
-memoryTrackerObject = hpy()
-mainSystem = SystemClass.System([],0,0)
+#mainSystem = SystemClass.System([],0,0)
 #mainSystem = SystemClass.System.initRandom(30,30)
 #mainSystem = SystemClass.System.initFromFile("19:37:23")
+parser = argparse.ArgumentParser()
+parser.add_argument("-r", type=int)
+parser.add_argument("-f")
+options = parser.parse_args()
+
+if options.f == None and options.r == None:
+	mainSystem = SystemClass.System.initRandom(30, 30)
+elif options.f == None:
+	mainSystem = SystemClass.System.initRandom(int(options.r), 30)
+else:
+	mainSystem = SystemClass.System.initFromFile(options.f)
+
+
+
+memoryTrackerObject = hpy()
+
 running = True
 while running:
 	for event in pygame.event.get():
