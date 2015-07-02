@@ -10,7 +10,7 @@ class Particle:
 		self.position = list(position)					  #list [x,y]
 		self.velocity = list(velocity)					  #list [x,y]
 		self.mass     = mass						  #int positive
-		self.radius   = radius 						  #positive int
+		self.radius   = radius + 1 						  #positive int
 		self.color    = color						  #fuple (r,g,b,a)
 		self.static   = False						  #false moves, true does not move
 		self.delete   = False 						  

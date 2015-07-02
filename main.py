@@ -21,10 +21,18 @@ options = parser.parse_args()
 
 memoryTrackerObject = hpy()
 
-mainSystem = SystemClass.System.initRandom(30,30)
+if options.f == None and options.r == None:
+	mainSystem = SystemClass.System.initRandom(30, 30)
+elif options.f == None:
+	mainSystem = SystemClass.System.initRandom(int(options.r), 30)
+else:
+	mainSystem = SystemClass.System.initFromFile(options.f)
+
+Focus = False
 running = True
 gamemode = 0
 start = False
+FocusNum = 0
 
 while running:
 	if gamemode == 0:
@@ -71,6 +79,14 @@ while running:
 					mainSystem.zoom = 1.0
 				elif event.key == pygame.K_1:
 					gamemode = 1
+				elif event.key == pygame.K_COMMA:
+					Focus = True
+					FocusNum += 1
+				elif event.key == pygame.K_PERIOD:
+					Focus = True
+					FocusNum -= 1
+				elif event.key == pygame.K_SLASH:
+					Focus = False
 
 			if mainSystem.pause == 2:					#handle new particle creation
 				if event.type == pygame.MOUSEBUTTONDOWN:
@@ -99,6 +115,14 @@ while running:
 			if event.type == pygame.MOUSEBUTTONUP:
 				mainSystem.size = True
 
+	if len(mainSystem.particleList) == 0:
+		Focus = False
+	elif FocusNum < 0:
+		FocusNum = len(mainSystem.particleList) - 1
+	elif FocusNum >= len(mainSystem.particleList):
+		FocusNum = 0
+
+
 	if gamemode == 1:
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			start = True
@@ -119,7 +143,10 @@ while running:
 				dy = end[1]-position[1]
 				player = PlayerClass(position, [dx,dy])
 				mainSystem.particleList.append(player)
-				
+	
+	if Focus == True:
+		mainSystem.offset[0] = - mainSystem.particleList[FocusNum].position[0] + width/2
+		mainSystem.offset[1] = - mainSystem.particleList[FocusNum].position[1] + height/2	
 
 	screen.fill((0,0,0))
 	for particle in mainSystem.particleList:
