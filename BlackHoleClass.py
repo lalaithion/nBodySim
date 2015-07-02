@@ -2,7 +2,6 @@ import ParticleClass
 
 import pygame
 import random
-import WormHoleClass
 
 class Blackhole(ParticleClass.Particle):
 	def __init__(self,position, position2=[],velocity=[0,0],mass=100000000):
