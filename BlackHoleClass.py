@@ -22,11 +22,12 @@ class Blackhole(ParticleClass.Particle):
 		return self(position1, position2, mass)
 
 	def _handleCollision(self,other):
+		if self.mass>200000000:
+			self.convertToWormhole()
 		if self._distanceToParticle(other) <= self.radius+other.radius:
 			if self.type == "Wormhole":
 				print "teleport"
 				if self._distanceBetweenPoints(self.position, other.position) < (self.radius + other.radius):
-					
 					other.position[0] = self.position2[0] # Careful assigning arrays points it to
 					other.position[1] = self.position2[1]
 					# * other.position = & self.position
