@@ -5,7 +5,7 @@ import random
 import WormHoleClass
 
 class Blackhole(ParticleClass.Particle):
-	def __init__(self,position, position2=[],velocity=[0,0],mass=10000000):
+	def __init__(self,position, position2=[],velocity=[0,0],mass=100000000):
 		self.position = list(position)				  #list [x,y]
 		self.position2 = []
 		self.velocity = list(velocity)				  #list [x,y]
@@ -62,7 +62,10 @@ class Blackhole(ParticleClass.Particle):
 			print self.position2
 			pygame.draw.circle(screen, (255,255,255,0.5), (int((self.position2[0]+offset[0])*zoom),int((self.position2[1]+offset[1])*zoom)), int(self.radius*zoom), 0)
 		ParticleClass.Particle.draw(self,screen,offset,zoom)
-
+	def updatePosition(self, timestep):
+		self.position[0] = self.position[0] + (self.velocity[0] * 0.0005)	#zoomOffset scales velocity to zoom level
+		self.position[1] = self.position[1] + (self.velocity[1] * 0.0005)								#multiply the velocity by the time to find change in position, and add this change to the inital position
+	
 	def __str__(self):
 		if self.type == "Wormhole":
 			return "Type: %s | Radius: %s | It links to: %s" % (self.type, str(self.radius), str(self.position2))
