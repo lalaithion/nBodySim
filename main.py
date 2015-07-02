@@ -1,11 +1,8 @@
 import LevelClass
 import SystemClass
 import ParticleClass
-<<<<<<< HEAD
 import BlackHoleClass
-=======
 import PlayerClass
->>>>>>> izaak
 import TempParticleSubclass as temp
 
 
