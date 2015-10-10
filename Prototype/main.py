@@ -4,8 +4,6 @@ import ParticleClass
 import BlackHoleClass
 import PlayerClass
 import TempParticleSubclass as temp
-
-
 import pygame
 import math
 import sys
@@ -156,10 +154,7 @@ while running:
 		mainSystem.offset[1] = - mainSystem.particleList[FocusNum].position[1] + height/2	
 
 	screen.fill((0,0,0))
-	for particle in mainSystem.particleList:
-		particle.draw(screen, mainSystem.offset, mainSystem.zoom)
 	if mainSystem.pause == 2:
-
 		if not mainSystem.size:
 			creating.updateRadius(pygame.mouse.get_pos(), mainSystem.offset, mainSystem.zoom)
 		creating.draw(screen, mainSystem.offset, mainSystem.zoom)
